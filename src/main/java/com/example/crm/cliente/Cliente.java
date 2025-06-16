@@ -1,20 +1,15 @@
 package com.example.crm.cliente;
 
-import jakarta.persistence.*;
+import com.example.crm.common.BaseEntity;
+import jakarta.persistence.Entity;
 
 @Entity
-public class Cliente {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Cliente extends BaseEntity {
 
     private String nome;
     private String email;
 
     // getters and setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
 

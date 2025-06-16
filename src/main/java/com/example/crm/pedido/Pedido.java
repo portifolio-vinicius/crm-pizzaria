@@ -1,20 +1,22 @@
 package com.example.crm.pedido;
 
 import com.example.crm.cliente.Cliente;
+import com.example.crm.common.BaseEntity;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-public class Pedido {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Pedido extends BaseEntity {
 
     @ManyToOne
     private Cliente cliente;
 
     @Enumerated(EnumType.STRING)
     private PedidoStatus status;
+
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PedidoItem> itens;
 
     private Double valorTotal;
 
@@ -23,8 +25,14 @@ public class Pedido {
 
     private LocalDateTime createdAt;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public List<PedidoItem> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<PedidoItem> itens) {
+        this.itens = itens;
+    }
+
     public Cliente getCliente() { return cliente; }
     public void setCliente(Cliente cliente) { this.cliente = cliente; }
     public PedidoStatus getStatus() { return status; }
