@@ -6,6 +6,9 @@ import java.time.LocalDateTime;
 
 import java.util.List;
 
+import com.example.crm.pedido.PagamentoStatus;
+import com.example.crm.pedido.PedidoStatus;
+
 @Service
 public class PedidoService {
     private final PedidoRepository repository;
@@ -20,7 +23,7 @@ public class PedidoService {
 
     public Pedido save(Pedido p) {
         if (p.getStatus() == null) {
-            p.setStatus("CRIADO");
+            p.setStatus(PedidoStatus.CRIADO);
         }
         if (p.getCreatedAt() == null) {
             p.setCreatedAt(LocalDateTime.now());

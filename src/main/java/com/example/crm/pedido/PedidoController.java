@@ -3,6 +3,8 @@ package com.example.crm.pedido;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.crm.pedido.PedidoStatus;
+
 import java.util.List;
 
 @RestController
@@ -17,7 +19,7 @@ public class PedidoController {
 
     @PostMapping
     public ResponseEntity<Pedido> create(@RequestBody Pedido p) {
-        p.setStatus("PENDENTE");
+        p.setStatus(PedidoStatus.PENDENTE);
         return ResponseEntity.ok(service.save(p));
     }
 
