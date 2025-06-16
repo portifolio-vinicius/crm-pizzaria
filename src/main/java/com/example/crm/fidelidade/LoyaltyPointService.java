@@ -19,4 +19,18 @@ public class LoyaltyPointService {
     public List<LoyaltyPoint> findAll() {
         return repository.findAll();
     }
+
+    public void accruePoints(com.example.crm.cliente.Cliente cliente, Double valorPedido) {
+        if (cliente == null || valorPedido == null) {
+            return;
+        }
+        int pontos = (int) Math.floor(valorPedido * 0.05);
+        if (pontos <= 0) {
+            return;
+        }
+        LoyaltyPoint lp = new LoyaltyPoint();
+        lp.setCliente(cliente);
+        lp.setPontos(pontos);
+        repository.save(lp);
+    }
 }

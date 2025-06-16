@@ -15,6 +15,10 @@ public class Pedido {
 
     private String status;
 
+    private Double valorTotal;
+
+    private String pagamentoStatus;
+
     private LocalDateTime createdAt;
 
     public Long getId() { return id; }
@@ -23,6 +27,12 @@ public class Pedido {
     public void setCliente(Cliente cliente) { this.cliente = cliente; }
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
+
+    public Double getValorTotal() { return valorTotal; }
+    public void setValorTotal(Double valorTotal) { this.valorTotal = valorTotal; }
+
+    public String getPagamentoStatus() { return pagamentoStatus; }
+    public void setPagamentoStatus(String pagamentoStatus) { this.pagamentoStatus = pagamentoStatus; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
