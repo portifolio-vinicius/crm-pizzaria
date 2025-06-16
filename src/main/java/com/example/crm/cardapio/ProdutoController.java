@@ -1,6 +1,7 @@
 package com.example.crm.cardapio;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class ProdutoController {
         this.service = service;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN_GERAL','GERENTE_OPERACIONAL')")
     @PostMapping
     public ResponseEntity<Produto> create(@RequestBody Produto p) {
         return ResponseEntity.ok(service.save(p));
