@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 
 import java.util.List;
 
+import com.example.crm.pedido.PedidoItem;
+
 import com.example.crm.pedido.PagamentoStatus;
 import com.example.crm.pedido.PedidoStatus;
 
@@ -28,6 +30,18 @@ public class PedidoService {
         if (p.getCreatedAt() == null) {
             p.setCreatedAt(LocalDateTime.now());
         }
+
+        if (p.getItens() != null) {
+            double total = 0;
+            for (PedidoItem item : p.getItens()) {
+                item.setPedido(p);
+                if (item.getPrecoUnitario() != null && item.getQuantidade() != null) {
+                    total += item.getPrecoUnitario() * item.getQuantidade();
+                }
+            }
+            p.setValorTotal(total);
+        }
+
         Pedido saved = repository.save(p);
         rabbitTemplate.convertAndSend("pedido.criado", saved.getId());
         saved.setPagamentoStatus(paymentGateway.process());

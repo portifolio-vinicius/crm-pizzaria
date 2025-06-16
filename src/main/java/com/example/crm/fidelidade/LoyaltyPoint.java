@@ -1,21 +1,18 @@
 package com.example.crm.fidelidade;
 
 import com.example.crm.cliente.Cliente;
-import jakarta.persistence.*;
+import com.example.crm.common.BaseEntity;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 
 @Entity
-public class LoyaltyPoint {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class LoyaltyPoint extends BaseEntity {
 
     @ManyToOne
     private Cliente cliente;
 
     private Integer pontos;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
     public Cliente getCliente() { return cliente; }
     public void setCliente(Cliente cliente) { this.cliente = cliente; }
     public Integer getPontos() { return pontos; }
