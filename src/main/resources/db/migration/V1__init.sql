@@ -14,6 +14,8 @@ CREATE TABLE pedido (
     id SERIAL PRIMARY KEY,
     cliente_id INTEGER REFERENCES cliente(id),
     status VARCHAR(20) NOT NULL,
+    valor_total NUMERIC(10,2),
+    pagamento_status VARCHAR(20),
     created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 

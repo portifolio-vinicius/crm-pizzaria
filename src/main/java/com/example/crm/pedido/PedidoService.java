@@ -10,10 +10,12 @@ import java.util.List;
 public class PedidoService {
     private final PedidoRepository repository;
     private final RabbitTemplate rabbitTemplate;
+    private final PaymentGateway paymentGateway;
 
-    public PedidoService(PedidoRepository repository, RabbitTemplate rabbitTemplate) {
+    public PedidoService(PedidoRepository repository, RabbitTemplate rabbitTemplate, PaymentGateway paymentGateway) {
         this.repository = repository;
         this.rabbitTemplate = rabbitTemplate;
+        this.paymentGateway = paymentGateway;
     }
 
     public Pedido save(Pedido p) {
@@ -25,7 +27,8 @@ public class PedidoService {
         }
         Pedido saved = repository.save(p);
         rabbitTemplate.convertAndSend("pedido.criado", saved.getId());
-        return saved;
+        saved.setPagamentoStatus(paymentGateway.process());
+        return repository.save(saved);
     }
 
     public List<Pedido> findAll() {
