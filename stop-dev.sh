@@ -21,12 +21,30 @@ print_warning() {
     echo -e "${YELLOW}[CRM-PIZZARIA-STOP]${NC} $1"
 }
 
+# Função para detectar comando docker compose correto
+get_docker_compose_cmd() {
+    if docker compose version >/dev/null 2>&1; then
+        echo "docker compose"
+    elif command -v docker-compose >/dev/null 2>&1; then
+        echo "docker-compose"
+    else
+        return 1
+    fi
+}
+
 print_message "Parando todos os serviços do CRM Pizzaria..."
+
+# Detectar comando docker compose correto
+DOCKER_COMPOSE_CMD=$(get_docker_compose_cmd)
 
 # Parar containers Docker
 print_message "Parando containers Docker..."
-cd app 2>/dev/null && docker-compose down 2>/dev/null && cd .. 2>/dev/null
-print_success "Containers Docker parados."
+if [ $? -eq 0 ] && [ -n "$DOCKER_COMPOSE_CMD" ]; then
+    cd app 2>/dev/null && $DOCKER_COMPOSE_CMD down 2>/dev/null && cd .. 2>/dev/null
+    print_success "Containers Docker parados."
+else
+    print_warning "Docker Compose não encontrado, pulando containers Docker."
+fi
 
 # Matar processos do Spring Boot
 print_message "Parando backend (Spring Boot)..."

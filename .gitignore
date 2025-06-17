@@ -4,3 +4,6 @@ target/
 *.iml
 # Frontend dependencies
 frontend/node_modules/
+# Development logs
+backend.log
+frontend.log

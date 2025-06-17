@@ -5,7 +5,7 @@ export interface Pedido {
     nome: string;
     email: string;
   };
-  status: 'CRIADO' | 'PENDENTE' | 'CANCELADO';
+  status: 'CRIADO' | 'PENDENTE' | 'CONFIRMADO' | 'EM_PREPARO' | 'ENTREGUE' | 'CANCELADO';
   itens: PedidoItem[];
   valorTotal: number;
   pagamentoStatus: 'APROVADO' | 'PENDENTE';

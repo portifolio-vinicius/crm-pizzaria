@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.example.crm.pedido.PedidoItem;
+import com.example.crm.config.RabbitMQConfig;
 
 import com.example.crm.pedido.PagamentoStatus;
 import com.example.crm.pedido.PedidoStatus;
@@ -43,7 +44,7 @@ public class PedidoService {
         }
 
         Pedido saved = repository.save(p);
-        rabbitTemplate.convertAndSend("pedido.criado", saved.getId());
+        rabbitTemplate.convertAndSend(RabbitMQConfig.PEDIDO_CRIADO_ROUTING_KEY, saved.getId());
         saved.setPagamentoStatus(paymentGateway.process());
         return repository.save(saved);
     }

@@ -35,6 +35,17 @@ command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
 
+# Função para detectar comando docker compose correto
+get_docker_compose_cmd() {
+    if docker compose version >/dev/null 2>&1; then
+        echo "docker compose"
+    elif command_exists docker-compose; then
+        echo "docker-compose"
+    else
+        return 1
+    fi
+}
+
 # Função para verificar se uma porta está em uso
 port_in_use() {
     lsof -i :"$1" >/dev/null 2>&1
@@ -71,8 +82,8 @@ cleanup() {
     print_warning "Parando todos os serviços..."
     
     # Parar containers Docker
-    if command_exists docker-compose; then
-        cd app && docker-compose down && cd ..
+    if [ -n "$DOCKER_COMPOSE_CMD" ]; then
+        cd app && $DOCKER_COMPOSE_CMD down && cd ..
     fi
     
     # Matar processos do backend e frontend se estiverem rodando
@@ -94,10 +105,14 @@ if ! command_exists docker; then
     exit 1
 fi
 
-if ! command_exists docker-compose; then
+# Detectar comando docker compose correto
+DOCKER_COMPOSE_CMD=$(get_docker_compose_cmd)
+if [ $? -ne 0 ]; then
     print_error "Docker Compose não está instalado. Por favor, instale o Docker Compose primeiro."
     exit 1
 fi
+
+print_message "Usando comando: $DOCKER_COMPOSE_CMD"
 
 if ! command_exists java; then
     print_error "Java não está instalado. Por favor, instale o Java 21 primeiro."
@@ -139,7 +154,7 @@ print_success "Todas as portas necessárias estão disponíveis!"
 # Iniciar containers Docker (banco de dados e serviços)
 print_message "Iniciando containers Docker (PostgreSQL, Redis, RabbitMQ)..."
 cd app
-docker-compose up -d db redis rabbit
+$DOCKER_COMPOSE_CMD up -d db redis rabbit
 cd ..
 
 # Aguardar serviços estarem disponíveis

@@ -1,6 +1,7 @@
 package com.example.crm.pedido;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,11 +22,13 @@ import java.util.List;
 public class PedidoController {
 
     private final PedidoService service;
+    private final PedidoDeliveryService deliveryService;
     private final ClienteService clienteService;
     private final UsuarioService usuarioService;
 
-    public PedidoController(PedidoService service, ClienteService clienteService, UsuarioService usuarioService) {
+    public PedidoController(PedidoService service, PedidoDeliveryService deliveryService, ClienteService clienteService, UsuarioService usuarioService) {
         this.service = service;
+        this.deliveryService = deliveryService;
         this.clienteService = clienteService;
         this.usuarioService = usuarioService;
     }
@@ -66,7 +69,7 @@ public class PedidoController {
     }    @GetMapping("/meus")
     public ResponseEntity<List<Pedido>> meusPedidos(Authentication auth) {
         if (auth == null || !(auth.getPrincipal() instanceof UserDetails)) {
-            return ResponseEntity.unauthorized().build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
@@ -89,5 +92,18 @@ public class PedidoController {
         
         // Para outros roles, retorna todos os pedidos
         return ResponseEntity.ok(service.findAll());
+    }
+
+    @PreAuthorize(RolePermissions.Pedido.UPDATE)
+    @PostMapping("/{id}/entregar")
+    public ResponseEntity<Pedido> marcarComoEntregue(@PathVariable Long id) {
+        try {
+            Pedido pedidoEntregue = deliveryService.marcarComoEntregue(id);
+            return ResponseEntity.ok(pedidoEntregue);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
