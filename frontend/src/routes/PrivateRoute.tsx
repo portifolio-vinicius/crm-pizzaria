@@ -4,7 +4,7 @@ import { useAuth } from '../hooks/useAuth';
 
 interface PrivateRouteProps {
   children: JSX.Element;
-  role?: string;
+  role?: string | string[];
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ children, role }) => {
@@ -14,8 +14,11 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children, role }) => {
     return <Navigate to="/profile" replace />;
   }
 
-  if (role && userRole !== role) {
-    return <Navigate to="/" replace />;
+  if (role) {
+    const allowedRoles = Array.isArray(role) ? role : [role];
+    if (userRole && !allowedRoles.includes(userRole)) {
+      return <Navigate to="/dashboard" replace />;
+    }
   }
 
   return children;

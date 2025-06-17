@@ -1,0 +1,9 @@
+.produtos-page {
+  padding: 16px;
+}
+
+.fab-add {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+}
