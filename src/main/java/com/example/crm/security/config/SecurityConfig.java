@@ -1,5 +1,6 @@
-package com.example.crm.auth;
+package com.example.crm.security.config;
 
+import com.example.crm.auth.JwtAuthFilter;
 import com.example.crm.usuario.UsuarioRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

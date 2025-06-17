@@ -4,6 +4,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.crm.security.roles.RolePermissions;
+
 import com.example.crm.pedido.PedidoStatus;
 
 import java.util.List;
@@ -18,20 +20,20 @@ public class PedidoController {
         this.service = service;
     }
 
-    @PreAuthorize("hasRole('CLIENTE')")
+    @PreAuthorize(RolePermissions.Pedido.CREATE)
     @PostMapping
     public ResponseEntity<Pedido> create(@RequestBody Pedido p) {
         p.setStatus(PedidoStatus.PENDENTE);
         return ResponseEntity.ok(service.save(p));
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','ASSISTENTE')")
+    @PreAuthorize(RolePermissions.Pedido.LIST)
     @GetMapping
     public ResponseEntity<List<Pedido>> all() {
         return ResponseEntity.ok(service.findAll());
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','ASSISTENTE')")
+    @PreAuthorize(RolePermissions.Pedido.READ)
     @GetMapping("/{id}")
     public ResponseEntity<Pedido> byId(@PathVariable Long id) {
         Pedido p = service.findById(id);

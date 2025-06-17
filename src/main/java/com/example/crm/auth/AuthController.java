@@ -10,6 +10,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.crm.security.roles.RolePermissions;
+
 @RestController
 @RequestMapping("/v1/auth")
 public class AuthController {
@@ -31,7 +33,7 @@ public class AuthController {
         return ResponseEntity.ok(usuarioService.registerCliente(u));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize(RolePermissions.Auth.REGISTER_OPERADOR)
     @PostMapping("/register/operador")
     public ResponseEntity<Usuario> registerOperador(@RequestBody Usuario u, Authentication auth) {
         Long adminId = null;
@@ -41,7 +43,7 @@ public class AuthController {
         return ResponseEntity.ok(usuarioService.registerOperador(u, adminId));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize(RolePermissions.Auth.REGISTER_ADMIN)
     @PostMapping("/register/admin")
     public ResponseEntity<Usuario> registerAdmin(@RequestBody Usuario u, Authentication auth) {
         Long adminId = null;
