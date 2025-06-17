@@ -6,4 +6,6 @@ export interface LoyaltyPoint {
     email: string;
   };
   pontos: number;
+  valorPedido?: number;
+  createdAt: string;
 }

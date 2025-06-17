@@ -20,6 +20,10 @@ public class LoyaltyPointService {
         return repository.findAll();
     }
 
+    public List<LoyaltyPoint> findByClienteId(Long clienteId) {
+        return repository.findByClienteId(clienteId);
+    }
+
     public void accruePoints(com.example.crm.cliente.Cliente cliente, Double valorPedido) {
         if (cliente == null || valorPedido == null) {
             return;
@@ -31,6 +35,7 @@ public class LoyaltyPointService {
         LoyaltyPoint lp = new LoyaltyPoint();
         lp.setCliente(cliente);
         lp.setPontos(pontos);
+        lp.setValorPedido(valorPedido);
         repository.save(lp);
     }
 }

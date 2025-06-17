@@ -55,4 +55,8 @@ public class PedidoService {
     public Pedido findById(Long id) {
         return repository.findById(id).orElse(null);
     }
+
+    public List<Pedido> findByClienteId(Long clienteId) {
+        return repository.findByClienteId(clienteId);
+    }
 }

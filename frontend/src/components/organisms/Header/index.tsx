@@ -13,6 +13,7 @@ import {
   ListItemIcon,
   ListItemText,
   ListItemButton,
+  Button as MuiButton,
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -76,6 +77,11 @@ const Header: React.FC = () => {
         { text: 'Motoboys', icon: <DeliveryIcon />, path: '/motoboys' },
         { text: 'Fidelidade', icon: <StarIcon />, path: '/fidelidade' },
       );
+    } else if (role === 'CLIENTE') {
+      items.push(
+        { text: 'Meus Pedidos', icon: <ShoppingCartIcon />, path: '/meus-pedidos' },
+        { text: 'Meus Pontos', icon: <StarIcon />, path: '/meus-pontos' },
+      );
     }
     
     return items;
@@ -124,9 +130,9 @@ const Header: React.FC = () => {
               </Menu>
             </Box>
           ) : (
-            <Button color="inherit" component={Link} to="/profile">
+            <MuiButton color="inherit" component={Link} to="/profile">
               Login
-            </Button>
+            </MuiButton>
           )}
         </Toolbar>
       </AppBar>

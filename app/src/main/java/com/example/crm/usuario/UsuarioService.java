@@ -46,4 +46,8 @@ public class UsuarioService implements UserDetailsService {
                 .roles(u.getRole().name())
                 .build();
     }
+
+    public Usuario findByUsername(String username) {
+        return repository.findByUsername(username).orElse(null);
+    }
 }

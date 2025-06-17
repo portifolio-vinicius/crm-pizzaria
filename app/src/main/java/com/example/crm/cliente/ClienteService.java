@@ -25,6 +25,10 @@ public class ClienteService {
         return repository.findById(id).orElse(null);
     }
 
+    public Cliente findByEmail(String email) {
+        return repository.findByEmail(email).orElse(null);
+    }
+
     public void delete(Long id) {
         repository.deleteById(id);
     }

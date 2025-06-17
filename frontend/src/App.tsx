@@ -7,6 +7,8 @@ import Clientes from './features/Clientes';
 import Produtos from './features/Produtos';
 import Pedidos from './features/Pedidos';
 import CriarPedido from './features/CriarPedido';
+import MeusPedidos from './features/MeusPedidos';
+import MeusPontos from './features/MeusPontos';
 import Motoboys from './features/Motoboys';
 import Fidelidade from './features/Fidelidade';
 import Usuarios from './features/Usuarios';
@@ -19,6 +21,24 @@ const App: React.FC = () => (
       <Routes>
         {/* Rota pública de login */}
         <Route path="/profile" element={<Profile />} />
+        
+        {/* Rotas específicas para CLIENTES */}
+        <Route
+          path="/meus-pedidos"
+          element={
+            <PrivateRoute role="CLIENTE">
+              <MeusPedidos />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/meus-pontos"
+          element={
+            <PrivateRoute role="CLIENTE">
+              <MeusPontos />
+            </PrivateRoute>
+          }
+        />
         
         {/* Rotas privadas para ADMIN */}
         <Route

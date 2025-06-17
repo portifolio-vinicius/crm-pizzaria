@@ -8,4 +8,5 @@ import com.example.crm.pedido.PedidoStatus;
 
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     List<Pedido> findByStatusAndCreatedAtBefore(PedidoStatus status, LocalDateTime date);
+    List<Pedido> findByClienteId(Long clienteId);
 }

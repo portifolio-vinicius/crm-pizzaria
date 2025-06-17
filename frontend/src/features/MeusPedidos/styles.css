@@ -1,0 +1,55 @@
+.meus-pedidos-page {
+  padding: 8px;
+}
+
+/* Mobile optimizations */
+@media (max-width: 600px) {
+  .meus-pedidos-page {
+    padding: 4px;
+  }
+  
+  .pedido-card {
+    margin-bottom: 12px;
+    border-radius: 12px;
+  }
+  
+  .pedido-header {
+    padding: 12px;
+    cursor: pointer;
+  }
+  
+  .pedido-details {
+    padding: 0 12px 12px 12px;
+  }
+  
+  .item-row {
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .item-row:last-child {
+    border-bottom: none;
+  }
+}
+
+/* Smooth animations */
+.pedido-card {
+  transition: all 0.2s ease-in-out;
+}
+
+.pedido-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Status indicators */
+.status-chip {
+  font-size: 0.75rem;
+  height: 24px;
+}
+
+@media (max-width: 600px) {
+  .status-chip {
+    font-size: 0.7rem;
+    height: 20px;
+  }
+}

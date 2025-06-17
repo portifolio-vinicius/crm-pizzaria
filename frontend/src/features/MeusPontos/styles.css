@@ -1,0 +1,48 @@
+.meus-pontos-page {
+  padding: 8px;
+}
+
+/* Mobile optimizations */
+@media (max-width: 600px) {
+  .meus-pontos-page {
+    padding: 4px;
+  }
+  
+  .pontos-card {
+    margin-bottom: 12px;
+    border-radius: 12px;
+  }
+  
+  .pontos-header {
+    padding: 12px;
+  }
+  
+  .historico-item {
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .historico-item:last-child {
+    border-bottom: none;
+  }
+}
+
+/* Smooth animations */
+.pontos-card {
+  transition: all 0.2s ease-in-out;
+}
+
+.pontos-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Progress bar styling */
+.pontos-progress {
+  height: 8px;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+}
+
+.pontos-progress .MuiLinearProgress-bar {
+  border-radius: 4px;
+}

@@ -2,9 +2,15 @@ package com.example.crm.pedido;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.crm.security.roles.RolePermissions;
+import com.example.crm.cliente.Cliente;
+import com.example.crm.cliente.ClienteService;
+import com.example.crm.usuario.Usuario;
+import com.example.crm.usuario.UsuarioService;
 
 import com.example.crm.pedido.PedidoStatus;
 
@@ -15,9 +21,13 @@ import java.util.List;
 public class PedidoController {
 
     private final PedidoService service;
+    private final ClienteService clienteService;
+    private final UsuarioService usuarioService;
 
-    public PedidoController(PedidoService service) {
+    public PedidoController(PedidoService service, ClienteService clienteService, UsuarioService usuarioService) {
         this.service = service;
+        this.clienteService = clienteService;
+        this.usuarioService = usuarioService;
     }
 
     @PreAuthorize(RolePermissions.Pedido.CREATE)
@@ -53,5 +63,31 @@ public class PedidoController {
             existing.setPagamentoStatus(p.getPagamentoStatus());
         }
         return ResponseEntity.ok(service.save(existing));
+    }    @GetMapping("/meus")
+    public ResponseEntity<List<Pedido>> meusPedidos(Authentication auth) {
+        if (auth == null || !(auth.getPrincipal() instanceof UserDetails)) {
+            return ResponseEntity.unauthorized().build();
+        }
+        
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        String username = userDetails.getUsername();
+        
+        // Busca o usuário pelo username
+        Usuario usuario = usuarioService.findByUsername(username);
+        if (usuario == null) {
+            return ResponseEntity.notFound().build();
+        }
+        
+        // Para clientes, busca os pedidos pelo email do usuário como cliente
+        if ("CLIENTE".equals(usuario.getRole().name())) {
+            Cliente cliente = clienteService.findByEmail(username); // assumindo que username é o email
+            if (cliente == null) {
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.ok(service.findByClienteId(cliente.getId()));
+        }
+        
+        // Para outros roles, retorna todos os pedidos
+        return ResponseEntity.ok(service.findAll());
     }
 }

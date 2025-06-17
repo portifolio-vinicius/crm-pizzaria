@@ -12,9 +12,12 @@ public class LoyaltyPoint extends BaseEntity {
     private Cliente cliente;
 
     private Integer pontos;
+    private Double valorPedido;
 
     public Cliente getCliente() { return cliente; }
     public void setCliente(Cliente cliente) { this.cliente = cliente; }
     public Integer getPontos() { return pontos; }
     public void setPontos(Integer pontos) { this.pontos = pontos; }
+    public Double getValorPedido() { return valorPedido; }
+    public void setValorPedido(Double valorPedido) { this.valorPedido = valorPedido; }
 }
