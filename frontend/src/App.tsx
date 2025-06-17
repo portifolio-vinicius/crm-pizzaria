@@ -6,6 +6,7 @@ import Dashboard from './features/Dashboard';
 import Clientes from './features/Clientes';
 import Produtos from './features/Produtos';
 import Pedidos from './features/Pedidos';
+import CriarPedido from './features/CriarPedido';
 import Motoboys from './features/Motoboys';
 import Fidelidade from './features/Fidelidade';
 import Usuarios from './features/Usuarios';
@@ -59,6 +60,14 @@ const App: React.FC = () => (
           element={
             <PrivateRoute>
               <Pedidos />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/pedidos/criar"
+          element={
+            <PrivateRoute>
+              <CriarPedido />
             </PrivateRoute>
           }
         />

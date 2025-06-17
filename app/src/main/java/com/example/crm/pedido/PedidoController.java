@@ -39,4 +39,19 @@ public class PedidoController {
         Pedido p = service.findById(id);
         return p != null ? ResponseEntity.ok(p) : ResponseEntity.notFound().build();
     }
+
+    @PreAuthorize(RolePermissions.Pedido.UPDATE)
+    @PutMapping("/{id}")
+    public ResponseEntity<Pedido> updateStatus(@PathVariable Long id, @RequestBody Pedido p) {
+        Pedido existing = service.findById(id);
+        if (existing == null) {
+            return ResponseEntity.notFound().build();
+        }
+        // Atualiza apenas status, mantém outros dados
+        existing.setStatus(p.getStatus());
+        if (p.getPagamentoStatus() != null) {
+            existing.setPagamentoStatus(p.getPagamentoStatus());
+        }
+        return ResponseEntity.ok(service.save(existing));
+    }
 }

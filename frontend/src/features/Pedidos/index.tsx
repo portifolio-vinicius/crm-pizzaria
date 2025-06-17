@@ -16,11 +16,13 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Fab,
 } from '@mui/material';
-import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
+import { ExpandMore as ExpandMoreIcon, Add as AddIcon } from '@mui/icons-material';
 import { useFetch } from '../../hooks/useFetch';
 import { Pedido } from '../../types/Pedido';
 import { formatDate } from '../../utils/formatDate';
+import { useNavigate } from 'react-router-dom';
 import './styles.css';
 
 const getStatusColor = (status: string) => {
@@ -48,6 +50,7 @@ const getPagamentoColor = (status: string) => {
 };
 
 const Pedidos: React.FC = () => {
+  const navigate = useNavigate();
   const { data: pedidos, loading, error } = useFetch<Pedido[]>('/pedidos');
 
   if (loading) return <Typography>Carregando...</Typography>;
@@ -147,6 +150,15 @@ const Pedidos: React.FC = () => {
           </Typography>
         </Box>
       )}
+
+      <Fab
+        color="primary"
+        aria-label="add"
+        className="fab-add"
+        onClick={() => navigate('/pedidos/criar')}
+      >
+        <AddIcon />
+      </Fab>
     </div>
   );
 };

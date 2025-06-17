@@ -62,6 +62,7 @@ const Header: React.FC = () => {
         { text: 'Clientes', icon: <PeopleIcon />, path: '/clientes' },
         { text: 'Produtos', icon: <RestaurantIcon />, path: '/produtos' },
         { text: 'Pedidos', icon: <ShoppingCartIcon />, path: '/pedidos' },
+        { text: 'Criar Pedido', icon: <ShoppingCartIcon />, path: '/pedidos/criar' },
         { text: 'Motoboys', icon: <DeliveryIcon />, path: '/motoboys' },
         { text: 'Fidelidade', icon: <StarIcon />, path: '/fidelidade' },
         { text: 'Usuários', icon: <PersonAddIcon />, path: '/usuarios' },
@@ -71,6 +72,7 @@ const Header: React.FC = () => {
         { text: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard' },
         { text: 'Produtos', icon: <RestaurantIcon />, path: '/produtos' },
         { text: 'Pedidos', icon: <ShoppingCartIcon />, path: '/pedidos' },
+        { text: 'Criar Pedido', icon: <ShoppingCartIcon />, path: '/pedidos/criar' },
         { text: 'Motoboys', icon: <DeliveryIcon />, path: '/motoboys' },
         { text: 'Fidelidade', icon: <StarIcon />, path: '/fidelidade' },
       );

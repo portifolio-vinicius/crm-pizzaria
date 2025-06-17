@@ -18,4 +18,12 @@ public class MotoboyService {
     public List<Motoboy> findAll() {
         return repository.findAll();
     }
+
+    public Motoboy findById(Long id) {
+        return repository.findById(id).orElse(null);
+    }
+
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
 }

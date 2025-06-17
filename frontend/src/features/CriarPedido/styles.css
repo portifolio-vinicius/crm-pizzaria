@@ -1,0 +1,16 @@
+.criar-pedido-page {
+  padding: 16px;
+}
+
+.carrinho-item {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 8px;
+}
+
+.quantidade-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

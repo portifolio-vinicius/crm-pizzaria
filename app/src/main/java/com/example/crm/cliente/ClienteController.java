@@ -36,4 +36,26 @@ public class ClienteController {
         Cliente c = service.findById(id);
         return c != null ? ResponseEntity.ok(c) : ResponseEntity.notFound().build();
     }
+
+    @PreAuthorize(RolePermissions.Cliente.UPDATE)
+    @PutMapping("/{id}")
+    public ResponseEntity<Cliente> update(@PathVariable Long id, @RequestBody Cliente c) {
+        Cliente existing = service.findById(id);
+        if (existing == null) {
+            return ResponseEntity.notFound().build();
+        }
+        c.setId(id);
+        return ResponseEntity.ok(service.save(c));
+    }
+
+    @PreAuthorize(RolePermissions.Cliente.DELETE)
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        Cliente existing = service.findById(id);
+        if (existing == null) {
+            return ResponseEntity.notFound().build();
+        }
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

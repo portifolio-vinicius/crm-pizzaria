@@ -29,4 +29,9 @@ public class ProdutoService {
     public Produto findById(Long id) {
         return repository.findById(id).orElse(null);
     }
+
+    @CacheEvict(value = "produto", allEntries = true)
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
 }

@@ -34,4 +34,26 @@ public class ProdutoController {
         Produto p = service.findById(id);
         return p != null ? ResponseEntity.ok(p) : ResponseEntity.notFound().build();
     }
+
+    @PreAuthorize(RolePermissions.Produto.UPDATE)
+    @PutMapping("/{id}")
+    public ResponseEntity<Produto> update(@PathVariable Long id, @RequestBody Produto p) {
+        Produto existing = service.findById(id);
+        if (existing == null) {
+            return ResponseEntity.notFound().build();
+        }
+        p.setId(id);
+        return ResponseEntity.ok(service.save(p));
+    }
+
+    @PreAuthorize(RolePermissions.Produto.DELETE)
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        Produto existing = service.findById(id);
+        if (existing == null) {
+            return ResponseEntity.notFound().build();
+        }
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
