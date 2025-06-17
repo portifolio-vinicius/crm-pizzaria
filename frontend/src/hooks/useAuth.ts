@@ -1,28 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../state/redux/hooks';
 import apiClient from '../services/apiClient';
+import { setToken, clearToken } from '../state/redux/slices/authSlice';
 
 export function useAuth() {
-  const [token, setToken] = useState<string | null>(
-    sessionStorage.getItem('token')
-  );
-
-  useEffect(() => {
-    if (token) {
-      sessionStorage.setItem('token', token);
-    } else {
-      sessionStorage.removeItem('token');
-    }
-  }, [token]);
+  const dispatch = useAppDispatch();
+  const token = useAppSelector((state) => state.auth.token);
+  const role = useAppSelector((state) => state.auth.role);
 
   const login = async (username: string, password: string) => {
     const res = await apiClient.post('/auth/login', { username, password });
-    setToken(res.data.token);
+    dispatch(setToken(res.data.token));
   };
 
   const logout = () => {
-    sessionStorage.removeItem('token');
-    setToken(null);
+    dispatch(clearToken());
   };
 
-  return { token, login, logout };
+  return { token, role, login, logout };
 }
