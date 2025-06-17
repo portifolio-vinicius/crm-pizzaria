@@ -25,13 +25,13 @@ public class PedidoController {
         return ResponseEntity.ok(service.save(p));
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN_GERAL','GERENTE_OPERACIONAL')")
+    @PreAuthorize("hasAnyRole('ADMIN','ASSISTENTE')")
     @GetMapping
     public ResponseEntity<List<Pedido>> all() {
         return ResponseEntity.ok(service.findAll());
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN_GERAL','GERENTE_OPERACIONAL')")
+    @PreAuthorize("hasAnyRole('ADMIN','ASSISTENTE')")
     @GetMapping("/{id}")
     public ResponseEntity<Pedido> byId(@PathVariable Long id) {
         Pedido p = service.findById(id);

@@ -31,7 +31,7 @@ public class AuthController {
         return ResponseEntity.ok(usuarioService.registerCliente(u));
     }
 
-    @PreAuthorize("hasRole('ADMIN_GERAL')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/register/operador")
     public ResponseEntity<Usuario> registerOperador(@RequestBody Usuario u, Authentication auth) {
         Long adminId = null;
@@ -41,7 +41,7 @@ public class AuthController {
         return ResponseEntity.ok(usuarioService.registerOperador(u, adminId));
     }
 
-    @PreAuthorize("hasRole('ADMIN_GERAL')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/register/admin")
     public ResponseEntity<Usuario> registerAdmin(@RequestBody Usuario u, Authentication auth) {
         Long adminId = null;

@@ -24,14 +24,14 @@ public class UsuarioService implements UserDetailsService {
     }
 
     public Usuario registerOperador(Usuario u, Long adminId) {
-        u.setRole(UsuarioRole.GERENTE_OPERACIONAL);
+        u.setRole(UsuarioRole.ASSISTENTE);
         u.setCreatedBy(adminId);
         u.setPassword(encoder.encode(u.getPassword()));
         return repository.save(u);
     }
 
     public Usuario registerAdmin(Usuario u, Long adminId) {
-        u.setRole(UsuarioRole.ADMIN_GERAL);
+        u.setRole(UsuarioRole.ADMIN);
         u.setCreatedBy(adminId);
         u.setPassword(encoder.encode(u.getPassword()));
         return repository.save(u);

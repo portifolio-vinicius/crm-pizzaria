@@ -16,13 +16,13 @@ public class MotoboyController {
         this.service = service;
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN_GERAL','GERENTE_OPERACIONAL')")
+    @PreAuthorize("hasAnyRole('ADMIN','ASSISTENTE')")
     @PostMapping
     public ResponseEntity<Motoboy> create(@RequestBody Motoboy m) {
         return ResponseEntity.ok(service.save(m));
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN_GERAL','GERENTE_OPERACIONAL')")
+    @PreAuthorize("hasAnyRole('ADMIN','ASSISTENTE')")
     @GetMapping
     public ResponseEntity<List<Motoboy>> all() {
         return ResponseEntity.ok(service.findAll());

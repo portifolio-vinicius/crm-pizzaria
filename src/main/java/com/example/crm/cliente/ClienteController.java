@@ -16,19 +16,19 @@ public class ClienteController {
         this.service = service;
     }
 
-    @PreAuthorize("hasRole('ADMIN_GERAL')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<Cliente> create(@RequestBody Cliente c) {
         return ResponseEntity.ok(service.save(c));
     }
 
-    @PreAuthorize("hasRole('ADMIN_GERAL')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<Cliente>> all() {
         return ResponseEntity.ok(service.findAll());
     }
 
-    @PreAuthorize("hasRole('ADMIN_GERAL')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<Cliente> byId(@PathVariable Long id) {
         Cliente c = service.findById(id);

@@ -20,7 +20,7 @@ public class UserDataInitializer implements CommandLineRunner {
             Usuario admin = new Usuario();
             admin.setUsername("admin");
             admin.setPassword(encoder.encode("admin123"));
-            admin.setRole(UsuarioRole.ADMIN_GERAL);
+            admin.setRole(UsuarioRole.ADMIN);
             repository.save(admin);
         }
     }

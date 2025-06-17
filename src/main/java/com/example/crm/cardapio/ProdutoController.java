@@ -16,7 +16,7 @@ public class ProdutoController {
         this.service = service;
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN_GERAL','GERENTE_OPERACIONAL')")
+    @PreAuthorize("hasAnyRole('ADMIN','ASSISTENTE')")
     @PostMapping
     public ResponseEntity<Produto> create(@RequestBody Produto p) {
         return ResponseEntity.ok(service.save(p));
