@@ -4,6 +4,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.crm.security.roles.RolePermissions;
+
 import java.util.List;
 
 @RestController
@@ -16,19 +18,19 @@ public class ClienteController {
         this.service = service;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize(RolePermissions.Cliente.CREATE)
     @PostMapping
     public ResponseEntity<Cliente> create(@RequestBody Cliente c) {
         return ResponseEntity.ok(service.save(c));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize(RolePermissions.Cliente.LIST)
     @GetMapping
     public ResponseEntity<List<Cliente>> all() {
         return ResponseEntity.ok(service.findAll());
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize(RolePermissions.Cliente.READ)
     @GetMapping("/{id}")
     public ResponseEntity<Cliente> byId(@PathVariable Long id) {
         Cliente c = service.findById(id);
