@@ -2,7 +2,29 @@
 
 Este repositório contém a base para o back-end de uma aplicação de CRM para uma pizzaria. A aplicação utiliza Docker **apenas** para os serviços de banco de dados e mensageria (Postgres, Redis e RabbitMQ). O servidor do Spring Boot roda localmente utilizando o web server embutido.
 
-## Como iniciar os bancos de dados
+## 🚀 Início Rápido (Recomendado)
+
+Para iniciar todo o ambiente de desenvolvimento com hot reloading:
+
+```bash
+./start-dev.sh
+```
+
+Para parar todos os serviços:
+
+```bash
+./stop-dev.sh
+```
+
+Após executar `./start-dev.sh`, você terá acesso a:
+- **Frontend**: http://localhost:5173 (com hot reloading)
+- **Backend**: http://localhost:8080 (com hot reloading) 
+- **API Docs**: http://localhost:8080/swagger-ui.html
+- **RabbitMQ**: http://localhost:15672 (guest/guest)
+
+📖 **Documentação completa**: [`docs/scripts-desenvolvimento.md`](docs/scripts-desenvolvimento.md)
+
+## Como iniciar os bancos de dados (método manual)
 
 1. Certifique-se de ter o Docker instalado.
 2. Execute:
