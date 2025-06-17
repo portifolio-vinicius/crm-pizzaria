@@ -5,7 +5,7 @@ import { useAuth } from '../../hooks/useAuth';
 import './styles.css';
 
 const Profile: React.FC = () => {
-  const { token, login, logout } = useAuth();
+  const { token, role, login, logout } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -19,6 +19,7 @@ const Profile: React.FC = () => {
       {token ? (
         <div>
           <p>Token: {token}</p>
+          {role && <p>Role: {role}</p>}
           <Button variant="contained" onClick={logout}>
             Logout
           </Button>
