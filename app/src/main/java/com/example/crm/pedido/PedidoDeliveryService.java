@@ -2,6 +2,8 @@ package com.example.crm.pedido;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.example.crm.config.RabbitMQConfig;
 
@@ -10,6 +12,7 @@ public class PedidoDeliveryService {
 
     private final PedidoRepository pedidoRepository;
     private final RabbitTemplate rabbitTemplate;
+    private static final Logger logger = LoggerFactory.getLogger(PedidoDeliveryService.class);
 
     public PedidoDeliveryService(PedidoRepository pedidoRepository, RabbitTemplate rabbitTemplate) {
         this.pedidoRepository = pedidoRepository;
@@ -46,8 +49,7 @@ public class PedidoDeliveryService {
         try {
             marcarComoEntregue(pedidoId);
         } catch (Exception e) {
-            // Log do erro em ambiente real
-            System.err.println("Erro ao simular entrega automática do pedido " + pedidoId + ": " + e.getMessage());
+            logger.error("Erro ao simular entrega automática do pedido {}: {}", pedidoId, e.getMessage());
         }
     }
 }
