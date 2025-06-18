@@ -12,9 +12,15 @@ export function useAuth() {
     dispatch(setToken(res.data.token));
   };
 
+  const register = async (username: string, password: string) => {
+    const res = await apiClient.post('/auth/register/client', { username, password });
+    // Após registro bem-sucedido, fazer login automaticamente
+    await login(username, password);
+  };
+
   const logout = () => {
     dispatch(clearToken());
   };
 
-  return { token, role, login, logout };
+  return { token, role, login, register, logout };
 }

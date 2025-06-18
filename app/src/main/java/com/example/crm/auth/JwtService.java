@@ -27,12 +27,20 @@ public class JwtService {
     }
 
     public String extractUsername(String token) {
-        return Jwts.parserBuilder().setSigningKey(key).build()
-                .parseClaimsJws(token).getBody().getSubject();
+        try {
+            return Jwts.parserBuilder().setSigningKey(key).build()
+                    .parseClaimsJws(token).getBody().getSubject();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public boolean isTokenValid(String token, UserDetails user) {
-        String username = extractUsername(token);
-        return username.equals(user.getUsername());
+        try {
+            String username = extractUsername(token);
+            return username != null && username.equals(user.getUsername());
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

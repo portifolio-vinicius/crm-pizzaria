@@ -22,20 +22,35 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
-    private final JwtAuthFilter jwtAuthFilter;
+    // Temporariamente comentado para debug
+    // private final JwtAuthFilter jwtAuthFilter;
 
-    public SecurityConfig(@Lazy JwtAuthFilter jwtAuthFilter) {
-        this.jwtAuthFilter = jwtAuthFilter;
-    }
+    // public SecurityConfig(@Lazy JwtAuthFilter jwtAuthFilter) {
+    //     this.jwtAuthFilter = jwtAuthFilter;
+    // }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
+            .cors(cors -> cors.configurationSource(request -> {
+                var corsConfiguration = new org.springframework.web.cors.CorsConfiguration();
+                corsConfiguration.setAllowedOriginPatterns(java.util.List.of("http://localhost:*", "http://127.0.0.1:*"));
+                corsConfiguration.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+                corsConfiguration.setAllowedHeaders(java.util.List.of("*"));
+                corsConfiguration.setAllowCredentials(true);
+                corsConfiguration.setMaxAge(3600L);
+                return corsConfiguration;
+            }))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**", "/actuator/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/v1/auth/test").permitAll()
                 .requestMatchers(HttpMethod.POST, "/v1/auth/register/client", "/v1/auth/login").permitAll()
-                .anyRequest().authenticated())
-            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Permitir preflight requests
+                .anyRequest().authenticated());
+        
+        // Temporariamente removendo o JwtAuthFilter para debug
+        // .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+        
         return http.build();
     }
 

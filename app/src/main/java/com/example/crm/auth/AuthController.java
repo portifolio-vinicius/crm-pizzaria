@@ -28,9 +28,23 @@ public class AuthController {
         this.jwtService = jwtService;
     }
 
+    @GetMapping("/test")
+    public ResponseEntity<String> test() {
+        return ResponseEntity.ok("Auth controller is working!");
+    }
+
     @PostMapping("/register/client")
     public ResponseEntity<Usuario> registerClient(@RequestBody Usuario u) {
-        return ResponseEntity.ok(usuarioService.registerCliente(u));
+        System.out.println("DEBUG: Registering client with username: " + u.getUsername());
+        try {
+            Usuario registeredUser = usuarioService.registerCliente(u);
+            System.out.println("DEBUG: User registered successfully with ID: " + registeredUser.getId());
+            return ResponseEntity.ok(registeredUser);
+        } catch (Exception e) {
+            System.err.println("DEBUG: Error registering user: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PreAuthorize(RolePermissions.Auth.REGISTER_OPERADOR)
