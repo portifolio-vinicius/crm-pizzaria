@@ -1,5 +1,6 @@
 package com.example.crm.usuario;
 
+import com.example.crm.exception.UserAlreadyExistsException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,12 +19,18 @@ public class UsuarioService implements UserDetailsService {
     }
 
     public Usuario registerCliente(Usuario u) {
+        if (repository.findByUsername(u.getUsername()).isPresent()) {
+            throw new UserAlreadyExistsException("Usuário com email " + u.getUsername() + " já existe");
+        }
         u.setRole(UsuarioRole.CLIENTE);
         u.setPassword(encoder.encode(u.getPassword()));
         return repository.save(u);
     }
 
     public Usuario registerOperador(Usuario u, Long adminId) {
+        if (repository.findByUsername(u.getUsername()).isPresent()) {
+            throw new UserAlreadyExistsException("Usuário com email " + u.getUsername() + " já existe");
+        }
         u.setRole(UsuarioRole.ASSISTENTE);
         u.setCreatedBy(adminId);
         u.setPassword(encoder.encode(u.getPassword()));
@@ -31,6 +38,9 @@ public class UsuarioService implements UserDetailsService {
     }
 
     public Usuario registerAdmin(Usuario u, Long adminId) {
+        if (repository.findByUsername(u.getUsername()).isPresent()) {
+            throw new UserAlreadyExistsException("Usuário com email " + u.getUsername() + " já existe");
+        }
         u.setRole(UsuarioRole.ADMIN);
         u.setCreatedBy(adminId);
         u.setPassword(encoder.encode(u.getPassword()));

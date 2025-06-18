@@ -2,6 +2,9 @@ package com.example.crm.auth;
 
 import com.example.crm.usuario.Usuario;
 import com.example.crm.usuario.UsuarioService;
+import com.example.crm.exception.UserAlreadyExistsException;
+import com.example.crm.exception.ErrorResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,16 +37,22 @@ public class AuthController {
     }
 
     @PostMapping("/register/client")
-    public ResponseEntity<Usuario> registerClient(@RequestBody Usuario u) {
+    public ResponseEntity<?> registerClient(@RequestBody Usuario u) {
         System.out.println("DEBUG: Registering client with username: " + u.getUsername());
         try {
             Usuario registeredUser = usuarioService.registerCliente(u);
             System.out.println("DEBUG: User registered successfully with ID: " + registeredUser.getId());
             return ResponseEntity.ok(registeredUser);
+        } catch (UserAlreadyExistsException e) {
+            return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(new ErrorResponse("Usuário já existe", e.getMessage()));
         } catch (Exception e) {
             System.err.println("DEBUG: Error registering user: " + e.getMessage());
             e.printStackTrace();
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponse("Erro ao registrar usuário", e.getMessage()));
         }
     }
 
