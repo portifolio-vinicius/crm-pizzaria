@@ -57,7 +57,16 @@ const Cardapio: React.FC = () => {
   };
 
   const getProductsByCategory = (categoria: string) => {
-    return products?.filter(p => p.categoria === categoria) || [];
+    if (!products || !Array.isArray(products)) {
+      return [];
+    }
+    return products.filter(p => {
+      // Suporte para ambos os formatos: objeto categoria ou string direta
+      const categoryName = typeof p.categoria === 'object' && p.categoria?.nome 
+        ? p.categoria.nome 
+        : p.categoriaNome || p.categoria;
+      return categoryName === categoria;
+    });
   };
 
   const getIcon = (categoria: string) => {

@@ -25,7 +25,7 @@ public class LoyaltyPoint extends BaseEntity {
     @Column(nullable = false)
     private Integer pontos;
     
-    @Column(name = "valor_pedido", precision = 10, scale = 2)
+    @Column(name = "valor_pedido")
     private Double valorPedido; // Mantido para histórico
     
     @Column(name = "created_at")
