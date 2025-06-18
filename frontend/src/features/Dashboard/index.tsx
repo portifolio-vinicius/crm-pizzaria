@@ -22,6 +22,7 @@ import { Product } from '../../types/Product';
 import { Pedido } from '../../types/Pedido';
 import { Motoboy } from '../../types/Motoboy';
 import { LoyaltyPoint } from '../../types/LoyaltyPoint';
+import { calcularValorTotalPedido } from '../../utils/pedidoUtils';
 import './styles.css';
 
 interface DashboardCardProps {
@@ -65,7 +66,7 @@ const Dashboard: React.FC = () => {
   const totalPedidos = pedidos?.length || 0;
   const totalMotoboys = motoboys?.length || 0;
   
-  const valorTotalVendas = pedidos?.reduce((acc, pedido) => acc + pedido.valorTotal, 0) || 0;
+  const valorTotalVendas = pedidos?.reduce((acc, pedido) => acc + calcularValorTotalPedido(pedido), 0) || 0;
   const pedidosPendentes = pedidos?.filter(p => p.status === 'PENDENTE').length || 0;
   const pedidosAprovados = pedidos?.filter(p => p.pagamentoStatus === 'APROVADO').length || 0;
   

@@ -18,8 +18,6 @@ public class Pedido extends BaseEntity {
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PedidoItem> itens;
 
-    private Double valorTotal;
-
     @Enumerated(EnumType.STRING)
     private PagamentoStatus pagamentoStatus;
 
@@ -38,12 +36,19 @@ public class Pedido extends BaseEntity {
     public PedidoStatus getStatus() { return status; }
     public void setStatus(PedidoStatus status) { this.status = status; }
 
-    public Double getValorTotal() { return valorTotal; }
-    public void setValorTotal(Double valorTotal) { this.valorTotal = valorTotal; }
-
     public PagamentoStatus getPagamentoStatus() { return pagamentoStatus; }
     public void setPagamentoStatus(PagamentoStatus pagamentoStatus) { this.pagamentoStatus = pagamentoStatus; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    
+    // Método para calcular valor total dinamicamente (normalização 3FN)
+    public Double getValorTotal() {
+        if (itens == null || itens.isEmpty()) {
+            return 0.0;
+        }
+        return itens.stream()
+                .mapToDouble(item -> item.getQuantidade() * item.getPrecoUnitario())
+                .sum();
+    }
 }

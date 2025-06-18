@@ -22,8 +22,9 @@ public class PedidoEventListener {
     @RabbitListener(queues = RabbitMQConfig.PEDIDO_ENTREGUE_QUEUE)
     public void handlePedidoEntregue(Long pedidoId) {
         Pedido p = pedidoRepository.findById(pedidoId).orElse(null);
-        if (p != null && p.getValorTotal() != null && p.getCliente() != null) {
-            loyaltyPointService.accruePoints(p.getCliente(), p.getValorTotal());
+        if (p != null && p.getCliente() != null) {
+            // Usar método normalizado ao invés do deprecated
+            loyaltyPointService.accruePointsFromPedido(p);
         }
     }
 

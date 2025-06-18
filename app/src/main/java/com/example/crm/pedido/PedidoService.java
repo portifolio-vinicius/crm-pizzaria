@@ -32,15 +32,11 @@ public class PedidoService {
             p.setCreatedAt(LocalDateTime.now());
         }
 
+        // Configurar relacionamento bidirecional com itens
         if (p.getItens() != null) {
-            double total = 0;
             for (PedidoItem item : p.getItens()) {
                 item.setPedido(p);
-                if (item.getPrecoUnitario() != null && item.getQuantidade() != null) {
-                    total += item.getPrecoUnitario() * item.getQuantidade();
-                }
             }
-            p.setValorTotal(total);
         }
 
         Pedido saved = repository.save(p);

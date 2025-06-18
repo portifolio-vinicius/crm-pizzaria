@@ -7,7 +7,6 @@ export interface Pedido {
   };
   status: 'CRIADO' | 'PENDENTE' | 'CONFIRMADO' | 'EM_PREPARO' | 'ENTREGUE' | 'CANCELADO';
   itens: PedidoItem[];
-  valorTotal: number;
   pagamentoStatus: 'APROVADO' | 'PENDENTE';
   createdAt: string;
 }
