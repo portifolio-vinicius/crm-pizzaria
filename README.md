@@ -48,3 +48,7 @@ A organização do código segue o padrão de **Feature Folders**, em que cada f
 ## Validação da Implementação
 
 O passo a passo detalhado de validação do ambiente local está descrito em [`docs/validation-plan.md`](docs/validation-plan.md).
+
+## Variáveis de Ambiente
+
+Em produção, defina a variável `JWT_SECRET` com a chave utilizada para assinar os tokens JWT. No ambiente de desenvolvimento essa chave possui um valor padrão definido em `application.yml`.
