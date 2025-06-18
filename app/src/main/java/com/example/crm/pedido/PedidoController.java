@@ -66,7 +66,9 @@ public class PedidoController {
             existing.setPagamentoStatus(p.getPagamentoStatus());
         }
         return ResponseEntity.ok(service.save(existing));
-    }    @GetMapping("/meus")
+    }
+
+    @GetMapping("/meus")
     public ResponseEntity<List<Pedido>> meusPedidos(Authentication auth) {
         if (auth == null || !(auth.getPrincipal() instanceof UserDetails)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

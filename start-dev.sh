@@ -149,6 +149,12 @@ if port_in_use 5173; then
     exit 1
 fi
 
+# Verificar porta do debugger Java
+if port_in_use 5005; then
+    print_error "Porta 5005 (Debug) já está em uso. Por favor, pare o processo que está usando esta porta."
+    exit 1
+fi
+
 print_success "Todas as portas necessárias estão disponíveis!"
 
 # Iniciar containers Docker (banco de dados e serviços)
