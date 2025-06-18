@@ -4,12 +4,15 @@ import com.example.crm.fidelidade.LoyaltyPointService;
 import com.example.crm.config.RabbitMQConfig;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Component
 public class PedidoEventListener {
 
     private final PedidoRepository pedidoRepository;
     private final LoyaltyPointService loyaltyPointService;
+    private static final Logger logger = LoggerFactory.getLogger(PedidoEventListener.class);
 
     public PedidoEventListener(PedidoRepository pedidoRepository, LoyaltyPointService loyaltyPointService) {
         this.pedidoRepository = pedidoRepository;
@@ -27,7 +30,7 @@ public class PedidoEventListener {
     @RabbitListener(queues = RabbitMQConfig.PEDIDO_CRIADO_QUEUE)
     public void handlePedidoCriado(Long pedidoId) {
         // Log para demonstrar que o evento foi recebido
-        System.out.println("Pedido criado com ID: " + pedidoId + " - Evento processado!");
+        logger.info("Pedido criado com ID: {} - Evento processado!", pedidoId);
         
         // Aqui pode ser implementada lógica adicional como:
         // - Notificação para a cozinha
