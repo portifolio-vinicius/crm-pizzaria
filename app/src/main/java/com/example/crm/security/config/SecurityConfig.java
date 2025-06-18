@@ -22,12 +22,11 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
-    // Temporariamente comentado para debug
-    // private final JwtAuthFilter jwtAuthFilter;
+    private final JwtAuthFilter jwtAuthFilter;
 
-    // public SecurityConfig(@Lazy JwtAuthFilter jwtAuthFilter) {
-    //     this.jwtAuthFilter = jwtAuthFilter;
-    // }
+    public SecurityConfig(@Lazy JwtAuthFilter jwtAuthFilter) {
+        this.jwtAuthFilter = jwtAuthFilter;
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -46,11 +45,9 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/v1/auth/test").permitAll()
                 .requestMatchers(HttpMethod.POST, "/v1/auth/register/client", "/v1/auth/login").permitAll()
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Permitir preflight requests
-                .anyRequest().authenticated());
-        
-        // Temporariamente removendo o JwtAuthFilter para debug
-        // .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-        
+                .anyRequest().authenticated())
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 
