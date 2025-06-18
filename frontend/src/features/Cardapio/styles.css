@@ -1,0 +1,52 @@
+.cardapio-page {
+  padding: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.category-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding: 16px 0;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.product-card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.price-tag {
+  background: linear-gradient(45deg, #1976d2, #42a5f5);
+  color: white;
+  font-weight: bold;
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 0.875rem;
+}
+
+.category-icon {
+  background: #f5f5f5;
+  border-radius: 50%;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 600px) {
+  .cardapio-page {
+    padding: 8px;
+  }
+  
+  .category-header {
+    flex-direction: column;
+    text-align: center;
+  }
+}

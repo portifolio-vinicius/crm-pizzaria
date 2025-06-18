@@ -9,10 +9,12 @@ import Pedidos from './features/Pedidos';
 import CriarPedido from './features/CriarPedido';
 import MeusPedidos from './features/MeusPedidos';
 import MeusPontos from './features/MeusPontos';
+import Cardapio from './features/Cardapio';
 import Motoboys from './features/Motoboys';
 import Fidelidade from './features/Fidelidade';
 import Usuarios from './features/Usuarios';
 import PrivateRoute from './routes/PrivateRoute';
+import RoleBasedRedirect from './routes/RoleBasedRedirect';
 import MainLayout from './layouts/MainLayout';
 
 const App: React.FC = () => (
@@ -23,6 +25,14 @@ const App: React.FC = () => (
         <Route path="/profile" element={<Profile />} />
         
         {/* Rotas específicas para CLIENTES */}
+        <Route
+          path="/cardapio"
+          element={
+            <PrivateRoute role="CLIENTE">
+              <Cardapio />
+            </PrivateRoute>
+          }
+        />
         <Route
           path="/meus-pedidos"
           element={
@@ -108,19 +118,9 @@ const App: React.FC = () => (
           }
         />
         
-        {/* Rota padrão - redireciona para dashboard se logado, senão para home */}
-        <Route
-          path="/"
-          element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/home"
-          element={<Home />}
-        />
+        {/* Rota padrão - redireciona baseado no role */}
+        <Route path="/" element={<RoleBasedRedirect />} />
+        <Route path="/home" element={<Home />} />
       </Routes>
     </MainLayout>
   </Router>

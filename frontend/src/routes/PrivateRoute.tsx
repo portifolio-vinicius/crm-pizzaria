@@ -17,7 +17,16 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children, role }) => {
   if (role) {
     const allowedRoles = Array.isArray(role) ? role : [role];
     if (userRole && !allowedRoles.includes(userRole)) {
-      return <Navigate to="/dashboard" replace />;
+      // Redirecionar baseado no role do usuário
+      switch (userRole) {
+        case 'CLIENTE':
+          return <Navigate to="/cardapio" replace />;
+        case 'ADMIN':
+        case 'ASSISTENTE':
+          return <Navigate to="/dashboard" replace />;
+        default:
+          return <Navigate to="/home" replace />;
+      }
     }
   }
 

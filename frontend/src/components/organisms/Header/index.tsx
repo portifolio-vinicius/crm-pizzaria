@@ -79,6 +79,7 @@ const Header: React.FC = () => {
       );
     } else if (role === 'CLIENTE') {
       items.push(
+        { text: 'Cardápio', icon: <RestaurantIcon />, path: '/cardapio' },
         { text: 'Meus Pedidos', icon: <ShoppingCartIcon />, path: '/meus-pedidos' },
         { text: 'Meus Pontos', icon: <StarIcon />, path: '/meus-pontos' },
       );
