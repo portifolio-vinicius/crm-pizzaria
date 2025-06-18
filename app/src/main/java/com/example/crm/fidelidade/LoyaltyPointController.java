@@ -2,6 +2,7 @@ package com.example.crm.fidelidade;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ import com.example.crm.cliente.Cliente;
 import com.example.crm.cliente.ClienteService;
 import com.example.crm.usuario.Usuario;
 import com.example.crm.usuario.UsuarioService;
+import com.example.crm.security.roles.RolePermissions;
 
 import java.util.List;
 
@@ -29,11 +31,13 @@ public class LoyaltyPointController {
         this.usuarioService = usuarioService;
     }
 
+    @PreAuthorize(RolePermissions.LoyaltyPoint.LIST)
     @GetMapping
     public ResponseEntity<List<LoyaltyPoint>> all() {
         return ResponseEntity.ok(service.findAll());
     }
 
+    @PreAuthorize(RolePermissions.LoyaltyPoint.READ_OWN)
     @GetMapping("/meus")
     public ResponseEntity<List<LoyaltyPoint>> meusPontos(Authentication auth) {
         if (auth == null || !(auth.getPrincipal() instanceof UserDetails)) {

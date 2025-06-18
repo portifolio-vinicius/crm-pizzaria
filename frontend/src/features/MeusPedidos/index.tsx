@@ -77,7 +77,7 @@ const MeusPedidos: React.FC = () => {
   
   // Se não for cliente, redireciona para a tela normal
   const endpoint = role === 'CLIENTE' ? '/pedidos/meus' : '/pedidos';
-  const { data: pedidos, loading, error } = useFetch<Pedido[]>(endpoint);
+  const { data: pedidos, loading, error, errorDetails } = useFetch<Pedido[]>(endpoint);
 
   const handleToggleExpand = (pedidoId: number) => {
     setExpandedPedido(expandedPedido === pedidoId ? null : pedidoId);
@@ -93,8 +93,21 @@ const MeusPedidos: React.FC = () => {
 
   if (error) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
-        <Typography color="error">Erro ao carregar pedidos</Typography>
+      <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" minHeight="50vh" padding={3}>
+        <Typography color="error" variant="h6" gutterBottom>
+          {error}
+        </Typography>
+        {errorDetails?.status && (
+          <Typography color="textSecondary" variant="body2" gutterBottom>
+            Código do erro: {errorDetails.status}
+          </Typography>
+        )}
+        <Typography color="textSecondary" variant="body2" textAlign="center">
+          {errorDetails?.status === 403 
+            ? 'Verifique se você está logado como cliente ou se tem as permissões necessárias.'
+            : 'Tente novamente ou entre em contato com o suporte se o problema persistir.'
+          }
+        </Typography>
       </Box>
     );
   }

@@ -68,6 +68,7 @@ public class PedidoController {
         return ResponseEntity.ok(service.save(existing));
     }
 
+    @PreAuthorize(RolePermissions.Pedido.READ_OWN)
     @GetMapping("/meus")
     public ResponseEntity<List<Pedido>> meusPedidos(Authentication auth) {
         if (auth == null || !(auth.getPrincipal() instanceof UserDetails)) {

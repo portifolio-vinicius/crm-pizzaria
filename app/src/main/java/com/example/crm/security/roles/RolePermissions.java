@@ -5,10 +5,10 @@ public final class RolePermissions {
 
     public static final class Produto {
         public static final String CREATE = "hasAnyRole('ADMIN','ASSISTENTE')";
-        public static final String READ = "hasAnyRole('ADMIN','ASSISTENTE')";
+        public static final String READ = "hasAnyRole('ADMIN','ASSISTENTE','CLIENTE')";
         public static final String UPDATE = "hasAnyRole('ADMIN','ASSISTENTE')";
         public static final String DELETE = "hasAnyRole('ADMIN','ASSISTENTE')";
-        public static final String LIST = "hasAnyRole('ADMIN','ASSISTENTE')";
+        public static final String LIST = "hasAnyRole('ADMIN','ASSISTENTE','CLIENTE')";
     }
 
     public static final class Cliente {
@@ -25,6 +25,7 @@ public final class RolePermissions {
         public static final String UPDATE = "hasAnyRole('ADMIN','ASSISTENTE')";
         public static final String DELETE = "hasAnyRole('ADMIN','ASSISTENTE')";
         public static final String LIST = "hasAnyRole('ADMIN','ASSISTENTE')";
+        public static final String READ_OWN = "hasAnyRole('ADMIN','ASSISTENTE','CLIENTE')";
     }
 
     public static final class Motoboy {
@@ -33,6 +34,11 @@ public final class RolePermissions {
         public static final String UPDATE = "hasAnyRole('ADMIN','ASSISTENTE')";
         public static final String DELETE = "hasAnyRole('ADMIN','ASSISTENTE')";
         public static final String LIST = "hasAnyRole('ADMIN','ASSISTENTE')";
+    }
+
+    public static final class LoyaltyPoint {
+        public static final String LIST = "hasAnyRole('ADMIN','ASSISTENTE')";
+        public static final String READ_OWN = "hasAnyRole('ADMIN','ASSISTENTE','CLIENTE')";
     }
 
     public static final class Auth {

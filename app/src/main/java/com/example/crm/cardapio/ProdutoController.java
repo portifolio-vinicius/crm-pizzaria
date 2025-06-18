@@ -30,21 +30,25 @@ public class ProdutoController {
         return ResponseEntity.ok(produto);
     }
 
+    @PreAuthorize(RolePermissions.Produto.LIST)
     @GetMapping
     public ResponseEntity<List<Produto>> all() {
         return ResponseEntity.ok(service.findAllActive());
     }
     
+    @PreAuthorize(RolePermissions.Produto.LIST)
     @GetMapping("/categoria/{categoriaNome}")
     public ResponseEntity<List<Produto>> byCategoria(@PathVariable String categoriaNome) {
         return ResponseEntity.ok(service.findByCategoria(categoriaNome));
     }
     
+    @PreAuthorize(RolePermissions.Produto.LIST)
     @GetMapping("/search")
     public ResponseEntity<List<Produto>> search(@RequestParam String nome) {
         return ResponseEntity.ok(service.searchByNome(nome));
     }
 
+    @PreAuthorize(RolePermissions.Produto.READ)
     @GetMapping("/{id}")
     public ResponseEntity<Produto> byId(@PathVariable Long id) {
         Produto p = service.findById(id);
