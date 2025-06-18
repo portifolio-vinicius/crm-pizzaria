@@ -1,3 +1,142 @@
+/* Modern Button Styles */
 .button {
   text-transform: none;
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  padding: 12px 24px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  border: none !important;
+  font-size: 14px !important;
+  letter-spacing: 0.25px !important;
+}
+
+.button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.button:active {
+  transform: translateY(0) !important;
+  transition: all 0.1s ease !important;
+}
+
+/* Primary Button */
+.button.MuiButton-contained {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+}
+
+.button.MuiButton-contained:hover {
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%) !important;
+}
+
+/* Secondary Button */
+.button.MuiButton-outlined {
+  border: 2px solid #667eea !important;
+  color: #667eea !important;
+  background: transparent !important;
+}
+
+.button.MuiButton-outlined:hover {
+  background: rgba(102, 126, 234, 0.1) !important;
+  border-color: #5a67d8 !important;
+  color: #5a67d8 !important;
+}
+
+/* Text Button */
+.button.MuiButton-text {
+  color: #667eea !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.button.MuiButton-text:hover {
+  background: rgba(102, 126, 234, 0.1) !important;
+  box-shadow: none !important;
+}
+
+/* Size Variants */
+.button.MuiButton-sizeSmall {
+  padding: 8px 16px !important;
+  font-size: 13px !important;
+}
+
+.button.MuiButton-sizeLarge {
+  padding: 16px 32px !important;
+  font-size: 16px !important;
+}
+
+/* Color Variants */
+.button.MuiButton-colorSecondary.MuiButton-contained {
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%) !important;
+}
+
+.button.MuiButton-colorSecondary.MuiButton-contained:hover {
+  background: linear-gradient(135deg, #5b6470 0%, #374151 100%) !important;
+}
+
+.button.MuiButton-colorError.MuiButton-contained {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+}
+
+.button.MuiButton-colorError.MuiButton-contained:hover {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+}
+
+.button.MuiButton-colorSuccess.MuiButton-contained {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+}
+
+.button.MuiButton-colorSuccess.MuiButton-contained:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+}
+
+.button.MuiButton-colorWarning.MuiButton-contained {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+}
+
+.button.MuiButton-colorWarning.MuiButton-contained:hover {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%) !important;
+}
+
+/* Disabled State */
+.button.Mui-disabled {
+  background: #e5e7eb !important;
+  color: #9ca3af !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* Loading State */
+.button .MuiCircularProgress-root {
+  color: inherit !important;
+  margin-right: 8px !important;
+}
+
+/* Icon Buttons */
+.button .MuiButton-startIcon {
+  margin-right: 8px !important;
+}
+
+.button .MuiButton-endIcon {
+  margin-left: 8px !important;
+}
+
+/* Full Width */
+.button.MuiButton-fullWidth {
+  width: 100% !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .button {
+    padding: 10px 20px !important;
+    font-size: 13px !important;
+  }
+  
+  .button.MuiButton-sizeLarge {
+    padding: 14px 28px !important;
+    font-size: 15px !important;
+  }
 }

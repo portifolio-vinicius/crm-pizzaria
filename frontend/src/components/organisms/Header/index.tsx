@@ -1,20 +1,4 @@
-import React, { useState } from 'react';
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Box,
-  IconButton,
-  Menu,
-  MenuItem,
-  Drawer,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  ListItemButton,
-  Button as MuiButton,
-} from '@mui/material';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Menu as MenuIcon,
   Dashboard as DashboardIcon,
@@ -28,28 +12,38 @@ import {
   Logout as LogoutIcon,
 } from '@mui/icons-material';
 import Button from '../../atoms/Button';
-import { Link, useNavigate } from 'react-router-dom';
+import UserMenu from '../../molecules/UserMenu';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../../hooks/useAuth';
-import './styles.css';
+import './Header.css';
 
 const Header: React.FC = () => {
   const { token, role, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const drawerRef = useRef<HTMLDivElement>(null);
 
-  const handleProfileMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  // Close drawer when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (drawerRef.current && !drawerRef.current.contains(event.target as Node)) {
+        setDrawerOpen(false);
+      }
+    };
 
-  const handleCloseProfileMenu = () => {
-    setAnchorEl(null);
-  };
+    if (drawerOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [drawerOpen]);
 
   const handleLogout = () => {
     logout();
     navigate('/profile');
-    handleCloseProfileMenu();
   };
 
   const menuItems = React.useMemo(() => {
@@ -88,80 +82,127 @@ const Header: React.FC = () => {
     return items;
   }, [token, role]);
 
+  const getRoleName = (role: string) => {
+    switch (role) {
+      case 'ADMIN': return 'Admin';
+      case 'ASSISTENTE': return 'Assistente';
+      case 'CLIENTE': return 'Cliente';
+      default: return '';
+    }
+  };
+
+  const getRoleDescription = (role: string) => {
+    switch (role) {
+      case 'ADMIN': return 'Painel Administrativo';
+      case 'ASSISTENTE': return 'Painel do Assistente';
+      case 'CLIENTE': return 'Área do Cliente';
+      default: return '';
+    }
+  };
+
   return (
     <>
-      <AppBar position="static">
-        <Toolbar>
+      <header className="header">
+        <div className="header__toolbar">
           {token && menuItems.length > 0 && (
-            <IconButton
-              color="inherit"
-              edge="start"
+            <button
+              className="header__menu-button"
               onClick={() => setDrawerOpen(true)}
-              sx={{ mr: 2 }}
+              aria-label="Abrir menu"
             >
               <MenuIcon />
-            </IconButton>
+            </button>
           )}
           
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            CRM Pizzaria
-          </Typography>
+          <Link 
+            to={token ? '/dashboard' : '/home'}
+            className="header__brand"
+          >
+            🍕 CRM Pizzaria
+          </Link>
 
-          {token ? (
-            <Box>
-              <IconButton
-                color="inherit"
-                onClick={handleProfileMenu}
-              >
-                <AccountCircleIcon />
-              </IconButton>
-              <Menu
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                onClose={handleCloseProfileMenu}
-              >
-                <MenuItem onClick={handleCloseProfileMenu} component={Link} to="/profile">
-                  <AccountCircleIcon sx={{ mr: 1 }} />
-                  Perfil
-                </MenuItem>
-                <MenuItem onClick={handleLogout}>
-                  <LogoutIcon sx={{ mr: 1 }} />
-                  Logout
-                </MenuItem>
-              </Menu>
-            </Box>
-          ) : (
-            <MuiButton color="inherit" component={Link} to="/profile">
-              Login
-            </MuiButton>
-          )}
-        </Toolbar>
-      </AppBar>
-
-      <Drawer
-        anchor="left"
-        open={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
-      >
-        <Box sx={{ width: 250 }}>
-          <List>
-            {menuItems.map((item) => (
-              <ListItem key={item.text} disablePadding>
-                <ListItemButton
-                  component={Link}
+          {/* Desktop Navigation */}
+          {token && menuItems.length > 0 && (
+            <nav className="header__nav">
+              {menuItems.slice(0, 4).map((item) => (
+                <Link
+                  key={item.path}
                   to={item.path}
+                  className={`header__nav-link ${
+                    location.pathname === item.path ? 'header__nav-link--active' : ''
+                  }`}
+                >
+                  {item.icon}
+                  {item.text}
+                </Link>
+              ))}
+            </nav>
+          )}
+
+          <div className="header__user-section">
+            {token ? (
+              <>
+                {role && (
+                  <span className="header__role-badge">
+                    {getRoleName(role)}
+                  </span>
+                )}
+                <UserMenu
+                  onLogout={handleLogout}
+                  profilePath="/profile"
+                />
+              </>
+            ) : (
+              <Link to="/profile" className="header__login-button">
+                <Button
+                  variant="outlined"
+                  size="sm"
+                >
+                  <AccountCircleIcon />
+                  Entrar
+                </Button>
+              </Link>
+            )}
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile Drawer */}
+      {drawerOpen && (
+        <>
+          <div 
+            className="header__overlay header__overlay--open"
+            onClick={() => setDrawerOpen(false)}
+          />
+          <aside className="header__drawer" ref={drawerRef}>
+            <div className="header__drawer-header">
+              <h3 className="header__drawer-title">Menu</h3>
+              {role && (
+                <p className="header__drawer-subtitle">
+                  {getRoleDescription(role)}
+                </p>
+              )}
+            </div>
+            <nav className="header__drawer-nav">
+              {menuItems.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`header__drawer-item ${
+                    location.pathname === item.path ? 'header__drawer-item--active' : ''
+                  }`}
                   onClick={() => setDrawerOpen(false)}
                 >
-                  <ListItemIcon>
+                  <span className="header__drawer-icon">
                     {item.icon}
-                  </ListItemIcon>
-                  <ListItemText primary={item.text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-        </Box>
-      </Drawer>
+                  </span>
+                  {item.text}
+                </Link>
+              ))}
+            </nav>
+          </aside>
+        </>
+      )}
     </>
   );
 };

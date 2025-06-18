@@ -1,20 +1,15 @@
 import React from 'react';
 import {
-  Typography,
-  Card,
-  CardContent,
-  Grid,
-  Box,
-  Chip,
-  LinearProgress,
-} from '@mui/material';
-import {
   People as PeopleIcon,
   ShoppingCart as ShoppingCartIcon,
   Restaurant as RestaurantIcon,
   DeliveryDining as DeliveryIcon,
   Star as StarIcon,
   TrendingUp as TrendingUpIcon,
+  MonetizationOn as MoneyIcon,
+  Pending as PendingIcon,
+  CheckCircle as CheckIcon,
+  Refresh as RefreshIcon,
 } from '@mui/icons-material';
 import { useFetch } from '../../hooks/useFetch';
 import { Cliente } from '../../types/Cliente';
@@ -23,33 +18,66 @@ import { Pedido } from '../../types/Pedido';
 import { Motoboy } from '../../types/Motoboy';
 import { LoyaltyPoint } from '../../types/LoyaltyPoint';
 import { calcularValorTotalPedido } from '../../utils/pedidoUtils';
-import './styles.css';
+import Card from '../../components/atoms/Card';
+import Button from '../../components/atoms/Button';
+import Loading from '../../components/atoms/Loading';
+import Breadcrumbs from '../../components/molecules/Breadcrumbs';
+import './Dashboard.css';
 
 interface DashboardCardProps {
   title: string;
   value: string | number;
+  subtitle?: string;
   icon: React.ReactNode;
-  color: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
+  color: string;
   loading?: boolean;
+  trend?: {
+    value: number;
+    isPositive: boolean;
+  };
 }
 
-const DashboardCard: React.FC<DashboardCardProps> = ({ title, value, icon, color, loading }) => (
-  <Card>
-    <CardContent>
-      <Box display="flex" alignItems="center" justifyContent="space-between">
-        <Box>
-          <Typography color="textSecondary" gutterBottom variant="h6">
-            {title}
-          </Typography>
-          <Typography variant="h4" component="h2">
-            {loading ? <LinearProgress /> : value}
-          </Typography>
-        </Box>
-        <Box color={`${color}.main`}>
-          {icon}
-        </Box>
-      </Box>
-    </CardContent>
+const DashboardCard: React.FC<DashboardCardProps> = ({ 
+  title, 
+  value, 
+  subtitle, 
+  icon, 
+  color, 
+  loading = false,
+  trend
+}) => (
+  <Card className="dashboard-card" variant="elevated">
+    <div className="dashboard-card__header">
+      <div className="dashboard-card__info">
+        <h3 className="dashboard-card__title">{title}</h3>
+        {subtitle && <p className="dashboard-card__subtitle">{subtitle}</p>}
+      </div>
+      <div 
+        className="dashboard-card__icon"
+        style={{ backgroundColor: `${color}15`, color }}
+      >
+        {icon}
+      </div>
+    </div>
+    
+    <div className="dashboard-card__content">
+      {loading ? (
+        <div className="dashboard-card__loading">
+          <Loading size="sm" />
+          <span>Carregando...</span>
+        </div>
+      ) : (
+        <>
+          <div className="dashboard-card__value">{value}</div>
+          {trend && (
+            <div className={`dashboard-card__trend dashboard-card__trend--${trend.isPositive ? 'positive' : 'negative'}`}>
+              <TrendingUpIcon className="dashboard-card__trend-icon" />
+              <span>{trend.value}%</span>
+            </div>
+          )}
+        </>
+      )}
+    </div>
   </Card>
 );
 
@@ -75,152 +103,177 @@ const Dashboard: React.FC = () => {
     [...new Set(loyaltyPoints.map(p => p.cliente.id))].length : 0;
 
   return (
-    <div className="dashboard-page">
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-        <Typography variant="h4" component="h1">
-          Dashboard
-        </Typography>
-        <Chip 
-          label="Visão Geral" 
-          color="primary" 
-          icon={<TrendingUpIcon />}
-        />
-      </Box>
+    <div className="dashboard">
+      <Breadcrumbs
+        items={[
+          { label: 'Dashboard' }
+        ]}
+        showHome={false}
+      />
+
+      <div className="dashboard__header">
+        <div className="dashboard__header-content">
+          <div>
+            <h1 className="dashboard__title">Dashboard</h1>
+            <p className="dashboard__subtitle">Visão geral do sistema de gestão da pizzaria</p>
+          </div>
+          <div className="dashboard__header-actions">
+            <Button
+              variant="outlined"
+              size="sm"
+              icon={<RefreshIcon />}
+            >
+              Atualizar
+            </Button>
+            <div className="dashboard__status-badge">
+              <span className="dashboard__status-indicator" />
+              Tempo Real
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Cards principais */}
-      <Grid container spacing={3} mb={4}>
-        <Grid item xs={12} sm={6} md={3}>
-          <DashboardCard
-            title="Total de Clientes"
-            value={totalClientes}
-            icon={<PeopleIcon sx={{ fontSize: 40 }} />}
-            color="primary"
-            loading={loadingClientes}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <DashboardCard
-            title="Total de Produtos"
-            value={totalProdutos}
-            icon={<RestaurantIcon sx={{ fontSize: 40 }} />}
-            color="secondary"
-            loading={loadingProdutos}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <DashboardCard
-            title="Total de Pedidos"
-            value={totalPedidos}
-            icon={<ShoppingCartIcon sx={{ fontSize: 40 }} />}
-            color="success"
-            loading={loadingPedidos}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <DashboardCard
-            title="Motoboys Ativos"
-            value={totalMotoboys}
-            icon={<DeliveryIcon sx={{ fontSize: 40 }} />}
-            color="warning"
-            loading={loadingMotoboys}
-          />
-        </Grid>
-      </Grid>
+      <div className="dashboard__grid">
+        <DashboardCard
+          title="Total de Clientes"
+          subtitle="Clientes cadastrados"
+          value={totalClientes.toLocaleString()}
+          icon={<PeopleIcon />}
+          color="#667eea"
+          loading={loadingClientes}
+          trend={{ value: 12, isPositive: true }}
+        />
+        
+        <DashboardCard
+          title="Produtos Ativos"
+          subtitle="Itens no cardápio"
+          value={totalProdutos.toLocaleString()}
+          icon={<RestaurantIcon />}
+          color="#48bb78"
+          loading={loadingProdutos}
+          trend={{ value: 5, isPositive: true }}
+        />
+        
+        <DashboardCard
+          title="Total de Pedidos"
+          subtitle="Pedidos realizados"
+          value={totalPedidos.toLocaleString()}
+          icon={<ShoppingCartIcon />}
+          color="#ed8936"
+          loading={loadingPedidos}
+          trend={{ value: 8, isPositive: true }}
+        />
+        
+        <DashboardCard
+          title="Motoboys Ativos"
+          subtitle="Entregadores disponíveis"
+          value={totalMotoboys.toLocaleString()}
+          icon={<DeliveryIcon />}
+          color="#38b2ac"
+          loading={loadingMotoboys}
+        />
+        
+        <DashboardCard
+          title="Faturamento Total"
+          subtitle="Receita total"
+          value={`R$ ${valorTotalVendas.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`}
+          icon={<MoneyIcon />}
+          color="#9f7aea"
+          loading={loadingPedidos}
+          trend={{ value: 15, isPositive: true }}
+        />
+        
+        <DashboardCard
+          title="Pedidos Pendentes"
+          subtitle="Aguardando processamento"
+          value={pedidosPendentes.toLocaleString()}
+          icon={<PendingIcon />}
+          color="#f56565"
+          loading={loadingPedidos}
+        />
+        
+        <DashboardCard
+          title="Pedidos Aprovados"
+          subtitle="Pagamentos confirmados"
+          value={pedidosAprovados.toLocaleString()}
+          icon={<CheckIcon />}
+          color="#48bb78"
+          loading={loadingPedidos}
+        />
+        
+        <DashboardCard
+          title="Pontos de Fidelidade"
+          subtitle={`${clientesComPontos} clientes participantes`}
+          value={totalPontosFidelidade.toLocaleString()}
+          icon={<StarIcon />}
+          color="#ed8936"
+          loading={loadingLoyalty}
+        />
+      </div>
 
-      {/* Cards secundários */}
-      <Grid container spacing={3} mb={4}>
-        <Grid item xs={12} sm={6} md={4}>
-          <DashboardCard
-            title="Valor Total de Vendas"
-            value={`R$ ${valorTotalVendas.toFixed(2)}`}
-            icon={<TrendingUpIcon sx={{ fontSize: 40 }} />}
-            color="success"
-            loading={loadingPedidos}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={4}>
-          <DashboardCard
-            title="Pedidos Pendentes"
-            value={pedidosPendentes}
-            icon={<ShoppingCartIcon sx={{ fontSize: 40 }} />}
-            color="warning"
-            loading={loadingPedidos}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={4}>
-          <DashboardCard
-            title="Pedidos Aprovados"
-            value={pedidosAprovados}
-            icon={<ShoppingCartIcon sx={{ fontSize: 40 }} />}
-            color="success"
-            loading={loadingPedidos}
-          />
-        </Grid>
-      </Grid>
-
-      {/* Cards de fidelidade */}
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
-          <DashboardCard
-            title="Total de Pontos"
-            value={totalPontosFidelidade}
-            icon={<StarIcon sx={{ fontSize: 40 }} />}
-            color="info"
-            loading={loadingLoyalty}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <DashboardCard
-            title="Clientes com Pontos"
-            value={clientesComPontos}
-            icon={<PeopleIcon sx={{ fontSize: 40 }} />}
-            color="info"
-            loading={loadingLoyalty}
-          />
-        </Grid>
-      </Grid>
-
-      {/* Resumo rápido */}
-      <Card sx={{ mt: 4 }}>
-        <CardContent>
-          <Typography variant="h6" gutterBottom>
-            Resumo Rápido
-          </Typography>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6} md={3}>
-              <Box textAlign="center">
-                <Typography variant="h4" color="primary.main">
-                  {((pedidosAprovados / Math.max(totalPedidos, 1)) * 100).toFixed(1)}%
-                </Typography>
-                <Typography color="textSecondary">Taxa de Aprovação</Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <Box textAlign="center">
-                <Typography variant="h4" color="success.main">
-                  R$ {totalPedidos > 0 ? (valorTotalVendas / totalPedidos).toFixed(2) : '0.00'}
-                </Typography>
-                <Typography color="textSecondary">Ticket Médio</Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <Box textAlign="center">
-                <Typography variant="h4" color="info.main">
-                  {clientesComPontos > 0 ? (totalPontosFidelidade / clientesComPontos).toFixed(0) : '0'}
-                </Typography>
-                <Typography color="textSecondary">Pontos por Cliente</Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <Box textAlign="center">
-                <Typography variant="h4" color="warning.main">
-                  {totalMotoboys > 0 ? Math.ceil(totalPedidos / totalMotoboys) : '0'}
-                </Typography>
-                <Typography color="textSecondary">Pedidos por Motoboy</Typography>
-              </Box>
-            </Grid>
-          </Grid>
-        </CardContent>
+      {/* Seção de métricas adicionais */}
+      <Card className="dashboard__metrics" variant="outlined">
+        <div className="dashboard__metrics-header">
+          <h2 className="dashboard__metrics-title">Métricas de Performance</h2>
+          <p className="dashboard__metrics-subtitle">Indicadores chave de performance do negócio</p>
+        </div>
+        
+        <div className="dashboard__metrics-grid">
+          <div className="dashboard__metric">
+            <div className="dashboard__metric-header">
+              <h4 className="dashboard__metric-title">Taxa de Aprovação</h4>
+              <span className="dashboard__metric-value">
+                {totalPedidos > 0 ? Math.round((pedidosAprovados / totalPedidos) * 100) : 0}%
+              </span>
+            </div>
+            <div className="dashboard__metric-bar">
+              <div 
+                className="dashboard__metric-progress"
+                style={{ 
+                  width: `${totalPedidos > 0 ? (pedidosAprovados / totalPedidos) * 100 : 0}%`,
+                  backgroundColor: '#48bb78'
+                }}
+              />
+            </div>
+          </div>
+          
+          <div className="dashboard__metric">
+            <div className="dashboard__metric-header">
+              <h4 className="dashboard__metric-title">Engajamento Fidelidade</h4>
+              <span className="dashboard__metric-value">
+                {totalClientes > 0 ? Math.round((clientesComPontos / totalClientes) * 100) : 0}%
+              </span>
+            </div>
+            <div className="dashboard__metric-bar">
+              <div 
+                className="dashboard__metric-progress"
+                style={{ 
+                  width: `${totalClientes > 0 ? (clientesComPontos / totalClientes) * 100 : 0}%`,
+                  backgroundColor: '#ed8936'
+                }}
+              />
+            </div>
+          </div>
+          
+          <div className="dashboard__metric">
+            <div className="dashboard__metric-header">
+              <h4 className="dashboard__metric-title">Capacidade de Entrega</h4>
+              <span className="dashboard__metric-value">
+                {totalMotoboys > 0 ? Math.min(100, Math.round((totalMotoboys / Math.max(1, pedidosPendentes)) * 100)) : 0}%
+              </span>
+            </div>
+            <div className="dashboard__metric-bar">
+              <div 
+                className="dashboard__metric-progress"
+                style={{ 
+                  width: `${totalMotoboys > 0 ? Math.min(100, (totalMotoboys / Math.max(1, pedidosPendentes)) * 100) : 0}%`,
+                  backgroundColor: '#38b2ac'
+                }}
+              />
+            </div>
+          </div>
+        </div>
       </Card>
     </div>
   );

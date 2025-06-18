@@ -1,1 +1,185 @@
-/* Header styles */
+/* Modern Header Styles */
+.header-container {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(229, 231, 235, 0.6);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.header-toolbar {
+  padding: 8px 24px !important;
+  min-height: 64px !important;
+}
+
+.header-title {
+  font-weight: 700 !important;
+  font-size: 20px !important;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-decoration: none;
+  margin-right: auto !important;
+}
+
+.header-menu-button {
+  background: rgba(102, 126, 234, 0.1) !important;
+  color: #667eea !important;
+  border-radius: 12px !important;
+  transition: all 0.3s ease !important;
+}
+
+.header-menu-button:hover {
+  background: rgba(102, 126, 234, 0.2) !important;
+  transform: scale(1.05);
+}
+
+.header-profile-button {
+  background: rgba(102, 126, 234, 0.1) !important;
+  color: #667eea !important;
+  border-radius: 12px !important;
+  margin-left: 16px !important;
+  transition: all 0.3s ease !important;
+}
+
+.header-profile-button:hover {
+  background: rgba(102, 126, 234, 0.2) !important;
+}
+
+.header-role-badge {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Drawer Styles */
+.header-drawer .MuiDrawer-paper {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(229, 231, 235, 0.6);
+  width: 280px;
+}
+
+.drawer-header {
+  padding: 24px 20px;
+  border-bottom: 1px solid rgba(229, 231, 235, 0.3);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.drawer-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.drawer-subtitle {
+  font-size: 14px;
+  opacity: 0.9;
+  margin: 4px 0 0 0;
+}
+
+.drawer-menu-item {
+  margin: 4px 12px;
+  border-radius: 12px !important;
+  transition: all 0.3s ease !important;
+}
+
+.drawer-menu-item:hover {
+  background: rgba(102, 126, 234, 0.1) !important;
+  transform: translateX(4px);
+}
+
+.drawer-menu-item.active {
+  background: rgba(102, 126, 234, 0.15) !important;
+  color: #667eea !important;
+}
+
+.drawer-menu-icon {
+  color: #6b7280 !important;
+  transition: color 0.3s ease !important;
+}
+
+.drawer-menu-item:hover .drawer-menu-icon,
+.drawer-menu-item.active .drawer-menu-icon {
+  color: #667eea !important;
+}
+
+.drawer-menu-text {
+  font-weight: 500 !important;
+}
+
+/* Profile Menu */
+.profile-menu .MuiPaper-root {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(229, 231, 235, 0.6);
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+  margin-top: 8px;
+  min-width: 200px;
+}
+
+.profile-menu-item {
+  padding: 12px 16px !important;
+  border-radius: 8px !important;
+  margin: 4px 8px !important;
+  transition: all 0.3s ease !important;
+}
+
+.profile-menu-item:hover {
+  background: rgba(102, 126, 234, 0.1) !important;
+  color: #667eea !important;
+}
+
+.profile-menu-icon {
+  margin-right: 12px !important;
+  color: #6b7280 !important;
+  transition: color 0.3s ease !important;
+}
+
+.profile-menu-item:hover .profile-menu-icon {
+  color: #667eea !important;
+}
+
+/* Login Button */
+.header-login-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  border-radius: 12px !important;
+  padding: 8px 20px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3) !important;
+}
+
+.header-login-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4) !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header-toolbar {
+    padding: 8px 16px !important;
+  }
+  
+  .header-title {
+    font-size: 18px !important;
+  }
+  
+  .header-drawer .MuiDrawer-paper {
+    width: 260px;
+  }
+  
+  .drawer-header {
+    padding: 20px 16px;
+  }
+}

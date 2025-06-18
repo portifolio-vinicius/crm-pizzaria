@@ -1,0 +1,56 @@
+/* Dashboard Layout */
+.dashboard-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--color-background);
+}
+
+.dashboard-layout__container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.dashboard-layout__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-left: 280px;
+  transition: var(--transition-base);
+}
+
+.dashboard-layout__content--expanded {
+  margin-left: 64px;
+}
+
+.dashboard-layout__inner {
+  flex: 1;
+  padding: var(--spacing-6);
+  overflow-y: auto;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dashboard-layout__content {
+    margin-left: 0;
+  }
+  
+  .dashboard-layout__content--expanded {
+    margin-left: 0;
+  }
+  
+  .dashboard-layout__inner {
+    padding: var(--spacing-4);
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-layout__inner {
+    padding: var(--spacing-3);
+  }
+}

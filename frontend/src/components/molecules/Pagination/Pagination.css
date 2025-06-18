@@ -1,0 +1,95 @@
+/* Pagination Molecule Component */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: var(--spacing-4) 0;
+}
+
+.pagination__container {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  flex-wrap: wrap;
+}
+
+.pagination__pages {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+}
+
+.pagination__button {
+  /* Inherits from Button component */
+}
+
+.pagination__button--current {
+  pointer-events: none;
+}
+
+.pagination__button--first,
+.pagination__button--last {
+  /* Optional: different styling for first/last buttons */
+}
+
+.pagination__button--prev,
+.pagination__button--next {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+}
+
+.pagination__button-text {
+  /* Show/hide text based on screen size */
+}
+
+.pagination__ellipsis {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: var(--color-text-secondary);
+}
+
+/* Size variants */
+.pagination--sm .pagination__ellipsis {
+  width: 32px;
+  height: 32px;
+}
+
+.pagination--lg .pagination__ellipsis {
+  width: 48px;
+  height: 48px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .pagination__container {
+    gap: var(--spacing-1);
+  }
+  
+  .pagination__pages {
+    gap: 2px;
+  }
+  
+  .pagination__button--first,
+  .pagination__button--last {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .pagination__button-text {
+    display: none;
+  }
+  
+  .pagination__container {
+    justify-content: center;
+  }
+  
+  /* Further simplify on very small screens */
+  .pagination__pages {
+    max-width: 200px;
+    overflow: hidden;
+  }
+}

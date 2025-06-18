@@ -1,0 +1,300 @@
+/* =================================================================
+   COMPONENTE LOADING - USANDO DESIGN TOKENS
+   ================================================================= */
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* ===== FULLSCREEN ===== */
+.loading--fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-modal);
+  background: var(--bg-overlay);
+  backdrop-filter: blur(4px);
+}
+
+.loading__backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg-overlay);
+}
+
+/* ===== CONTENT ===== */
+.loading__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-4);
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== TAMANHOS ===== */
+.loading--sm .loading__content {
+  gap: var(--spacing-2);
+}
+
+.loading--sm .loading__text {
+  font-size: var(--font-size-xs) !important;
+}
+
+.loading--md .loading__content {
+  gap: var(--spacing-3);
+}
+
+.loading--md .loading__text {
+  font-size: var(--font-size-sm) !important;
+}
+
+.loading--lg .loading__content {
+  gap: var(--spacing-4);
+}
+
+.loading--lg .loading__text {
+  font-size: var(--font-size-base) !important;
+}
+
+.loading--xl .loading__content {
+  gap: var(--spacing-5);
+}
+
+.loading--xl .loading__text {
+  font-size: var(--font-size-lg) !important;
+}
+
+/* ===== SPINNER CIRCULAR ===== */
+.loading__spinner {
+  animation: var(--animation-spin);
+}
+
+.loading--primary .loading__spinner {
+  color: var(--color-primary) !important;
+}
+
+.loading--secondary .loading__spinner {
+  color: var(--color-secondary) !important;
+}
+
+.loading--inherit .loading__spinner {
+  color: inherit !important;
+}
+
+/* ===== DOTS VARIANT ===== */
+.loading__dots {
+  display: flex;
+  gap: var(--spacing-1);
+  align-items: center;
+}
+
+.loading__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--border-radius-full);
+  background: var(--color-primary);
+  animation: loading-dots 1.4s ease-in-out infinite both;
+}
+
+.loading--sm .loading__dot {
+  width: 6px;
+  height: 6px;
+}
+
+.loading--lg .loading__dot {
+  width: 10px;
+  height: 10px;
+}
+
+.loading--xl .loading__dot {
+  width: 12px;
+  height: 12px;
+}
+
+.loading__dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.loading__dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes loading-dots {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ===== CUSTOM SPINNER ===== */
+.loading__custom-spinner {
+  position: relative;
+  display: inline-block;
+}
+
+.loading__spinner-ring {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--color-gray-200);
+  border-top: 3px solid var(--color-primary);
+  border-radius: var(--border-radius-full);
+  animation: var(--animation-spin);
+}
+
+.loading--sm .loading__spinner-ring {
+  width: 20px;
+  height: 20px;
+  border-width: 2px;
+}
+
+.loading--lg .loading__spinner-ring {
+  width: 48px;
+  height: 48px;
+  border-width: 4px;
+}
+
+.loading--xl .loading__spinner-ring {
+  width: 64px;
+  height: 64px;
+  border-width: 5px;
+}
+
+/* ===== TEXTO ===== */
+.loading__text {
+  font-family: var(--font-family-primary) !important;
+  font-weight: var(--font-weight-medium) !important;
+  color: var(--color-gray-600) !important;
+  text-align: center;
+  margin: 0 !important;
+  white-space: nowrap;
+}
+
+.loading--fullscreen .loading__text {
+  color: var(--color-white) !important;
+}
+
+/* ===== CORES ===== */
+.loading--primary .loading__dots .loading__dot {
+  background: var(--color-primary);
+}
+
+.loading--primary .loading__spinner-ring {
+  border-top-color: var(--color-primary);
+}
+
+.loading--secondary .loading__dots .loading__dot {
+  background: var(--color-secondary);
+}
+
+.loading--secondary .loading__spinner-ring {
+  border-top-color: var(--color-secondary);
+}
+
+.loading--inherit .loading__dots .loading__dot {
+  background: currentColor;
+}
+
+.loading--inherit .loading__spinner-ring {
+  border-top-color: currentColor;
+}
+
+/* ===== VARIANTS ESPECIAIS ===== */
+
+/* Pulse variant */
+.loading--pulse .loading__spinner {
+  animation: var(--animation-pulse);
+}
+
+/* Bounce variant */
+.loading--bounce .loading__content {
+  animation: var(--animation-bounce);
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 640px) {
+  .loading--lg .loading__spinner-ring {
+    width: 40px;
+    height: 40px;
+    border-width: 3px;
+  }
+  
+  .loading--xl .loading__spinner-ring {
+    width: 48px;
+    height: 48px;
+    border-width: 4px;
+  }
+  
+  .loading__text {
+    font-size: var(--font-size-sm) !important;
+  }
+}
+
+/* ===== INTEGRAÇÃO COM TEMA ESCURO ===== */
+@media (prefers-color-scheme: dark) {
+  .loading__text {
+    color: var(--color-gray-300) !important;
+  }
+  
+  .loading__spinner-ring {
+    border-color: var(--color-gray-600);
+  }
+}
+
+/* ===== LOADING EM CONTAINERS ===== */
+.card .loading {
+  padding: var(--spacing-8);
+}
+
+.modal__content .loading {
+  min-height: 120px;
+}
+
+/* ===== LOADING INLINE ===== */
+.loading--inline {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.loading--inline .loading__content {
+  flex-direction: row;
+  gap: var(--spacing-2);
+}
+
+/* ===== LOADING COM OVERLAY ===== */
+.loading--overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(2px);
+  z-index: var(--z-dropdown);
+}
+
+/* ===== ESTADOS DE ERRO/SUCESSO ===== */
+.loading--success .loading__spinner {
+  color: var(--color-success) !important;
+}
+
+.loading--error .loading__spinner {
+  color: var(--color-error) !important;
+}
+
+.loading--warning .loading__spinner {
+  color: var(--color-warning) !important;
+}

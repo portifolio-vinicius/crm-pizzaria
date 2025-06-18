@@ -1,0 +1,278 @@
+/* =================================================================
+   ADMIN LAYOUT - LAYOUT PARA PÁGINAS ADMINISTRATIVAS
+   ================================================================= */
+
+.admin-layout {
+  min-height: calc(100vh - var(--header-height));
+  padding-top: var(--spacing-6);
+  padding-bottom: var(--spacing-8);
+}
+
+.admin-layout__container {
+  position: relative;
+}
+
+/* ===== BREADCRUMBS ===== */
+.admin-layout__breadcrumbs {
+  margin-bottom: var(--spacing-4);
+  padding: var(--spacing-3) var(--spacing-4);
+  background: var(--bg-card);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: var(--border-width-1) solid var(--color-gray-200);
+}
+
+.admin-layout__breadcrumb-link {
+  color: var(--color-gray-600) !important;
+  text-decoration: none !important;
+  font-family: var(--font-family-primary) !important;
+  font-size: var(--font-size-sm) !important;
+  font-weight: var(--font-weight-medium) !important;
+  transition: var(--transition-colors) !important;
+  display: flex !important;
+  align-items: center;
+  gap: var(--spacing-1);
+}
+
+.admin-layout__breadcrumb-link:hover {
+  color: var(--color-primary) !important;
+}
+
+.admin-layout__breadcrumb--current {
+  color: var(--color-gray-900) !important;
+  font-family: var(--font-family-primary) !important;
+  font-size: var(--font-size-sm) !important;
+  font-weight: var(--font-weight-semibold) !important;
+}
+
+/* ===== HEADER ===== */
+.admin-layout__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-6);
+  margin-bottom: var(--spacing-8);
+  padding: var(--spacing-6);
+  background: var(--bg-card);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-md);
+  border: var(--border-width-1) solid var(--color-gray-200);
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-layout__header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-primary);
+  opacity: 0.8;
+}
+
+.admin-layout__title-section {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-layout__title {
+  font-family: var(--font-family-primary) !important;
+  font-weight: var(--font-weight-bold) !important;
+  font-size: var(--font-size-3xl) !important;
+  color: var(--color-gray-900) !important;
+  margin: 0 0 var(--spacing-2) 0 !important;
+  line-height: var(--line-height-tight) !important;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.admin-layout__subtitle {
+  font-family: var(--font-family-primary) !important;
+  font-size: var(--font-size-base) !important;
+  color: var(--color-gray-600) !important;
+  margin: 0 !important;
+  line-height: var(--line-height-relaxed) !important;
+  font-weight: var(--font-weight-normal) !important;
+}
+
+.admin-layout__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  flex-shrink: 0;
+}
+
+/* ===== CONTENT ===== */
+.admin-layout__content {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 768px) {
+  .admin-layout {
+    padding-top: var(--spacing-4);
+    padding-bottom: var(--spacing-6);
+  }
+  
+  .admin-layout__breadcrumbs {
+    margin-bottom: var(--spacing-3);
+    padding: var(--spacing-2) var(--spacing-3);
+  }
+  
+  .admin-layout__breadcrumb-link,
+  .admin-layout__breadcrumb--current {
+    font-size: var(--font-size-xs) !important;
+  }
+  
+  .admin-layout__header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--spacing-4);
+    margin-bottom: var(--spacing-6);
+    padding: var(--spacing-4);
+  }
+  
+  .admin-layout__title {
+    font-size: var(--font-size-2xl) !important;
+  }
+  
+  .admin-layout__subtitle {
+    font-size: var(--font-size-sm) !important;
+  }
+  
+  .admin-layout__actions {
+    flex-direction: column;
+    gap: var(--spacing-2);
+  }
+  
+  .admin-layout__actions > * {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-layout {
+    padding-top: var(--spacing-3);
+    padding-bottom: var(--spacing-4);
+  }
+  
+  .admin-layout__header {
+    margin-bottom: var(--spacing-4);
+    padding: var(--spacing-3);
+  }
+  
+  .admin-layout__title {
+    font-size: var(--font-size-xl) !important;
+  }
+  
+  .admin-layout__breadcrumbs {
+    padding: var(--spacing-2);
+  }
+}
+
+/* ===== INTEGRAÇÃO COM TEMA ESCURO ===== */
+@media (prefers-color-scheme: dark) {
+  .admin-layout__breadcrumbs {
+    background: var(--color-gray-800);
+    border-color: var(--color-gray-700);
+  }
+  
+  .admin-layout__breadcrumb-link {
+    color: var(--color-gray-400) !important;
+  }
+  
+  .admin-layout__breadcrumb-link:hover {
+    color: var(--color-primary) !important;
+  }
+  
+  .admin-layout__breadcrumb--current {
+    color: var(--color-gray-100) !important;
+  }
+  
+  .admin-layout__header {
+    background: var(--color-gray-800);
+    border-color: var(--color-gray-700);
+  }
+  
+  .admin-layout__title {
+    color: var(--color-gray-100) !important;
+  }
+  
+  .admin-layout__subtitle {
+    color: var(--color-gray-400) !important;
+  }
+}
+
+/* ===== VARIANTES ===== */
+
+/* Compact variant */
+.admin-layout--compact .admin-layout__header {
+  padding: var(--spacing-4);
+  margin-bottom: var(--spacing-6);
+}
+
+.admin-layout--compact .admin-layout__title {
+  font-size: var(--font-size-2xl) !important;
+}
+
+/* Centered variant */
+.admin-layout--centered {
+  text-align: center;
+}
+
+.admin-layout--centered .admin-layout__header {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.admin-layout--centered .admin-layout__actions {
+  justify-content: center;
+}
+
+/* Full width variant */
+.admin-layout--full-width .admin-layout__container {
+  max-width: none;
+  padding: 0 var(--spacing-6);
+}
+
+@media (max-width: 768px) {
+  .admin-layout--full-width .admin-layout__container {
+    padding: 0 var(--spacing-4);
+  }
+}
+
+/* ===== ANIMAÇÕES ===== */
+.admin-layout__header,
+.admin-layout__breadcrumbs {
+  animation: var(--animation-slide-in-down);
+}
+
+.admin-layout__content {
+  animation: var(--animation-fade-in);
+}
+
+/* ===== ESTADOS ESPECIAIS ===== */
+
+/* Loading state */
+.admin-layout--loading .admin-layout__content {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Error state */
+.admin-layout--error .admin-layout__header::before {
+  background: var(--gradient-error);
+}
+
+.admin-layout--error .admin-layout__title {
+  background: var(--gradient-error);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

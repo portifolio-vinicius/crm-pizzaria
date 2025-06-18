@@ -1,0 +1,112 @@
+/* Breadcrumbs Molecule Component */
+.breadcrumbs {
+  margin-bottom: var(--spacing-4);
+}
+
+.breadcrumbs__list {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  flex-wrap: wrap;
+}
+
+.breadcrumbs__item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.breadcrumbs__link {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-1) var(--spacing-2);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--radius-sm);
+  transition: var(--transition-base);
+}
+
+.breadcrumbs__link:hover {
+  background: var(--color-surface-hover);
+  color: var(--color-primary);
+}
+
+.breadcrumbs__text {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-1) var(--spacing-2);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.breadcrumbs__text--current {
+  color: var(--color-text);
+  font-weight: var(--font-weight-semibold);
+}
+
+.breadcrumbs__icon {
+  display: flex;
+  align-items: center;
+  width: 16px;
+  height: 16px;
+  color: currentColor;
+}
+
+.breadcrumbs__separator {
+  display: flex;
+  align-items: center;
+  width: 16px;
+  height: 16px;
+  color: var(--color-text-secondary);
+  opacity: 0.6;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .breadcrumbs__list {
+    gap: var(--spacing-1);
+  }
+  
+  .breadcrumbs__link,
+  .breadcrumbs__text {
+    font-size: var(--font-size-xs);
+    padding: var(--spacing-1);
+  }
+  
+  .breadcrumbs__icon,
+  .breadcrumbs__separator {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .breadcrumbs__list {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: var(--spacing-1);
+  }
+  
+  .breadcrumbs__item {
+    flex-shrink: 0;
+  }
+  
+  /* Hide intermediate items on very small screens */
+  .breadcrumbs__item:not(:first-child):not(:last-child):not(:nth-last-child(2)) {
+    display: none;
+  }
+  
+  .breadcrumbs__item:nth-last-child(3)::after {
+    content: '...';
+    margin: 0 var(--spacing-1);
+    color: var(--color-text-secondary);
+  }
+}

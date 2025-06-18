@@ -1,0 +1,300 @@
+/* =================================================================
+   COMPONENTE FORM FIELD - USANDO DESIGN TOKENS
+   ================================================================= */
+
+.form-field {
+  margin-bottom: var(--spacing-4);
+}
+
+/* ===== ORIENTAÇÕES ===== */
+.form-field--vertical {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.form-field--horizontal {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.form-field--horizontal .form-field__label {
+  flex-shrink: 0;
+  min-width: 120px;
+  margin-bottom: 0 !important;
+}
+
+.form-field--horizontal .form-field__input-container {
+  flex: 1;
+}
+
+/* ===== TAMANHOS ===== */
+.form-field--sm {
+  margin-bottom: var(--spacing-3);
+}
+
+.form-field--sm .form-field__label {
+  font-size: var(--font-size-sm);
+}
+
+.form-field--md {
+  margin-bottom: var(--spacing-4);
+}
+
+.form-field--lg {
+  margin-bottom: var(--spacing-6);
+}
+
+.form-field--lg .form-field__label {
+  font-size: var(--font-size-base);
+}
+
+/* ===== LABEL ===== */
+.form-field__label {
+  font-family: var(--font-family-primary) !important;
+  font-weight: var(--font-weight-medium) !important;
+  font-size: var(--font-size-sm) !important;
+  color: var(--color-gray-700) !important;
+  margin-bottom: var(--spacing-1) !important;
+  line-height: var(--line-height-normal);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+}
+
+.form-field__required {
+  color: var(--color-error);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-sm);
+}
+
+/* ===== INPUT CONTAINER ===== */
+.form-field__input-container {
+  position: relative;
+  width: 100%;
+}
+
+/* ===== HELPER TEXT ===== */
+.form-field__helper-text {
+  font-family: var(--font-family-primary) !important;
+  font-size: var(--font-size-xs) !important;
+  color: var(--color-gray-500) !important;
+  margin-top: var(--spacing-1) !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  line-height: var(--line-height-normal);
+}
+
+/* ===== ESTADOS ===== */
+
+/* Error State */
+.form-field--error .form-field__label {
+  color: var(--color-error) !important;
+}
+
+.form-field--error .form-field__helper-text {
+  color: var(--color-error) !important;
+}
+
+/* Focus State */
+.form-field:focus-within .form-field__label {
+  color: var(--color-primary) !important;
+}
+
+.form-field--error:focus-within .form-field__label {
+  color: var(--color-error) !important;
+}
+
+/* ===== FULL WIDTH ===== */
+.form-field--full-width {
+  width: 100%;
+}
+
+.form-field--full-width .form-field__input-container {
+  width: 100%;
+}
+
+/* ===== VARIANTES ESPECIAIS ===== */
+
+/* Inline variant (para checkboxes, radios) */
+.form-field--inline {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-2);
+}
+
+.form-field--inline .form-field__label {
+  margin-bottom: 0 !important;
+  order: 2;
+}
+
+.form-field--inline .form-field__input-container {
+  order: 1;
+  width: auto;
+}
+
+/* Compact variant */
+.form-field--compact {
+  margin-bottom: var(--spacing-2);
+}
+
+.form-field--compact .form-field__label {
+  font-size: var(--font-size-xs) !important;
+  margin-bottom: var(--spacing-1) !important;
+}
+
+/* ===== GRUPOS DE CAMPOS ===== */
+.form-field-group {
+  display: flex;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-4);
+}
+
+.form-field-group .form-field {
+  margin-bottom: 0;
+  flex: 1;
+}
+
+.form-field-group--vertical {
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.form-field-group--horizontal {
+  flex-direction: row;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 640px) {
+  .form-field--horizontal {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--spacing-2);
+  }
+  
+  .form-field--horizontal .form-field__label {
+    min-width: auto;
+    margin-bottom: 0 !important;
+  }
+  
+  .form-field-group {
+    flex-direction: column;
+    gap: var(--spacing-2);
+  }
+  
+  .form-field-group .form-field {
+    margin-bottom: var(--spacing-2);
+  }
+  
+  .form-field-group .form-field:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* ===== INTEGRAÇÃO COM OUTROS COMPONENTES ===== */
+
+/* Dentro de Cards */
+.card .form-field {
+  background: transparent;
+}
+
+/* Dentro de Modals */
+.modal__content .form-field {
+  margin-bottom: var(--spacing-4);
+}
+
+.modal__content .form-field:last-child {
+  margin-bottom: 0;
+}
+
+/* ===== TEMA ESCURO ===== */
+@media (prefers-color-scheme: dark) {
+  .form-field__label {
+    color: var(--color-gray-300) !important;
+  }
+  
+  .form-field__helper-text {
+    color: var(--color-gray-400) !important;
+  }
+  
+  .form-field:focus-within .form-field__label {
+    color: var(--color-primary) !important;
+  }
+  
+  .form-field--error .form-field__label,
+  .form-field--error .form-field__helper-text {
+    color: var(--color-error) !important;
+  }
+}
+
+/* ===== ANIMAÇÕES ===== */
+.form-field {
+  animation: var(--animation-fade-in);
+}
+
+.form-field__label {
+  transition: var(--transition-colors);
+}
+
+.form-field__helper-text {
+  transition: var(--transition-colors);
+}
+
+/* ===== ACCESSIBILITY ===== */
+.form-field__label:focus-within {
+  outline: none;
+}
+
+/* ===== VARIANTES DE LAYOUT ESPECIAIS ===== */
+
+/* Grid layout para formulários complexos */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-6);
+}
+
+.form-grid .form-field {
+  margin-bottom: 0;
+}
+
+.form-grid--2-cols {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.form-grid--3-cols {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-grid--2-cols,
+  .form-grid--3-cols {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== LABELS FLUTUANTES ===== */
+.form-field--floating .form-field__label {
+  position: absolute;
+  top: 0;
+  left: var(--spacing-3);
+  background: var(--color-white);
+  padding: 0 var(--spacing-1);
+  transform: translateY(-50%);
+  font-size: var(--font-size-xs) !important;
+  z-index: 1;
+}
+
+/* ===== CAMPOS OBRIGATÓRIOS ===== */
+.form-field--required .form-field__label::after {
+  content: '*';
+  color: var(--color-error);
+  margin-left: var(--spacing-1);
+}

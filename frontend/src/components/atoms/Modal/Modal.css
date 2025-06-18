@@ -1,0 +1,276 @@
+/* =================================================================
+   COMPONENTE MODAL - USANDO DESIGN TOKENS
+   ================================================================= */
+
+.modal .MuiDialog-root {
+  z-index: var(--z-modal);
+}
+
+/* ===== BACKDROP ===== */
+.modal__backdrop {
+  background: var(--bg-overlay);
+  backdrop-filter: blur(4px);
+  transition: var(--transition-base);
+}
+
+/* ===== PAPER (CONTAINER PRINCIPAL) ===== */
+.modal__paper {
+  background: var(--bg-card);
+  border-radius: var(--border-radius-2xl);
+  box-shadow: var(--shadow-2xl);
+  border: var(--border-width-1) solid var(--color-gray-200);
+  max-height: calc(100vh - var(--spacing-16));
+  overflow: hidden;
+  position: relative;
+}
+
+/* ===== TAMANHOS ===== */
+.modal--sm .modal__paper {
+  max-width: 400px;
+  width: 90vw;
+}
+
+.modal--md .modal__paper {
+  max-width: 600px;
+  width: 90vw;
+}
+
+.modal--lg .modal__paper {
+  max-width: 800px;
+  width: 90vw;
+}
+
+.modal--xl .modal__paper {
+  max-width: 1200px;
+  width: 95vw;
+}
+
+.modal--fullScreen .modal__paper {
+  max-width: none;
+  width: 100vw;
+  height: 100vh;
+  border-radius: 0;
+  margin: 0;
+}
+
+/* ===== HEADER ===== */
+.modal__header {
+  background: var(--bg-card);
+  border-bottom: var(--border-width-1) solid var(--color-gray-200);
+  padding: var(--spacing-6) !important;
+  position: relative;
+}
+
+.modal__title-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+}
+
+.modal__title {
+  font-family: var(--font-family-primary) !important;
+  font-weight: var(--font-weight-semibold) !important;
+  font-size: var(--font-size-xl) !important;
+  color: var(--color-gray-900) !important;
+  margin: 0 !important;
+  flex: 1;
+}
+
+.modal__close-button {
+  color: var(--color-gray-500) !important;
+  background: var(--color-gray-100) !important;
+  border: var(--border-width-1) solid var(--color-gray-200) !important;
+  border-radius: var(--border-radius-md) !important;
+  padding: var(--spacing-2) !important;
+  transition: var(--transition-all) !important;
+  flex-shrink: 0;
+}
+
+.modal__close-button:hover {
+  background: var(--color-gray-200) !important;
+  color: var(--color-gray-700) !important;
+  transform: scale(1.05);
+}
+
+/* ===== CONTENT ===== */
+.modal__content {
+  padding: var(--spacing-6) !important;
+  overflow-y: auto;
+  max-height: calc(100vh - 200px);
+  
+  /* Custom scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gray-300) transparent;
+}
+
+.modal__content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal__content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal__content::-webkit-scrollbar-thumb {
+  background: var(--color-gray-300);
+  border-radius: var(--border-radius-full);
+}
+
+.modal__content::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gray-400);
+}
+
+/* ===== ACTIONS ===== */
+.modal__actions {
+  background: var(--bg-card);
+  border-top: var(--border-width-1) solid var(--color-gray-200);
+  padding: var(--spacing-4) var(--spacing-6) !important;
+  gap: var(--spacing-3);
+  justify-content: flex-end;
+}
+
+/* ===== RESPONSIVIDADE MOBILE ===== */
+.modal--mobile .modal__paper {
+  margin: var(--spacing-4);
+  max-height: calc(100vh - var(--spacing-8));
+  border-radius: var(--border-radius-xl);
+}
+
+.modal--mobile .modal__header {
+  padding: var(--spacing-4) !important;
+}
+
+.modal--mobile .modal__title {
+  font-size: var(--font-size-lg) !important;
+}
+
+.modal--mobile .modal__content {
+  padding: var(--spacing-4) !important;
+  max-height: calc(100vh - 140px);
+}
+
+.modal--mobile .modal__actions {
+  padding: var(--spacing-3) var(--spacing-4) !important;
+  flex-direction: column-reverse;
+  gap: var(--spacing-2);
+}
+
+.modal--mobile .modal__actions > * {
+  width: 100%;
+}
+
+/* ===== ANIMAÇÕES ===== */
+.modal .MuiDialog-container {
+  animation: var(--animation-fade-in);
+}
+
+.modal__paper {
+  animation: var(--animation-slide-in-up);
+}
+
+/* ===== EFEITOS ESPECIAIS ===== */
+.modal__paper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-primary);
+  opacity: 0.8;
+}
+
+/* ===== VARIAÇÕES DE TAMANHO PARA MOBILE ===== */
+@media (max-width: 640px) {
+  .modal--sm .modal__paper,
+  .modal--md .modal__paper,
+  .modal--lg .modal__paper,
+  .modal--xl .modal__paper {
+    width: calc(100vw - var(--spacing-8));
+    max-width: none;
+    margin: var(--spacing-4);
+  }
+  
+  .modal__header {
+    padding: var(--spacing-4) !important;
+  }
+  
+  .modal__content {
+    padding: var(--spacing-4) !important;
+  }
+  
+  .modal__actions {
+    padding: var(--spacing-3) var(--spacing-4) !important;
+    flex-direction: column-reverse;
+  }
+  
+  .modal__actions > * {
+    width: 100%;
+  }
+}
+
+/* ===== INTEGRAÇÃO COM TEMA ESCURO ===== */
+@media (prefers-color-scheme: dark) {
+  .modal__paper {
+    background: var(--color-gray-800);
+    border-color: var(--color-gray-700);
+  }
+  
+  .modal__header {
+    background: var(--color-gray-800);
+    border-color: var(--color-gray-700);
+  }
+  
+  .modal__title {
+    color: var(--color-gray-100) !important;
+  }
+  
+  .modal__close-button {
+    background: var(--color-gray-700) !important;
+    border-color: var(--color-gray-600) !important;
+    color: var(--color-gray-300) !important;
+  }
+  
+  .modal__close-button:hover {
+    background: var(--color-gray-600) !important;
+    color: var(--color-gray-100) !important;
+  }
+  
+  .modal__actions {
+    background: var(--color-gray-800);
+    border-color: var(--color-gray-700);
+  }
+}
+
+/* ===== ESTADOS DE LOADING ===== */
+.modal--loading .modal__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+/* ===== MODAL SEM TÍTULO ===== */
+.modal__paper:not(:has(.modal__header)) {
+  padding-top: var(--spacing-2);
+}
+
+.modal__paper:not(:has(.modal__header)) .modal__content {
+  padding-top: var(--spacing-8) !important;
+}
+
+/* ===== MODAL COM FORMULÁRIO ===== */
+.modal__content form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.modal__content .form-section {
+  margin-bottom: var(--spacing-6);
+}
+
+.modal__content .form-section:last-child {
+  margin-bottom: 0;
+}

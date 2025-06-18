@@ -1,0 +1,258 @@
+/* =================================================================
+   COMPONENTE SEARCH FIELD - USANDO DESIGN TOKENS
+   ================================================================= */
+
+.search-field {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  position: relative;
+}
+
+/* ===== TAMANHOS ===== */
+.search-field--sm {
+  gap: var(--spacing-2);
+}
+
+.search-field--md {
+  gap: var(--spacing-3);
+}
+
+.search-field--lg {
+  gap: var(--spacing-4);
+}
+
+/* ===== ESTADOS ===== */
+.search-field--disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.search-field--full-width {
+  width: 100%;
+}
+
+.search-field--full-width .search-field__input {
+  flex: 1;
+}
+
+/* ===== INPUT ===== */
+.search-field__input {
+  flex: 1;
+  min-width: 0;
+}
+
+.search-field__input .MuiOutlinedInput-root {
+  border-radius: var(--border-radius-full);
+  background: var(--bg-card);
+  transition: var(--transition-all);
+}
+
+.search-field__input .MuiOutlinedInput-root:hover {
+  background: var(--color-white);
+  box-shadow: var(--shadow-sm);
+}
+
+.search-field__input .MuiOutlinedInput-root.Mui-focused {
+  background: var(--color-white);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-primary);
+}
+
+/* ===== ÍCONES ===== */
+.search-field__search-icon {
+  color: var(--color-gray-400);
+  font-size: 20px !important;
+  transition: var(--transition-colors);
+}
+
+.search-field__clear-icon {
+  color: var(--color-gray-400);
+  font-size: 18px !important;
+  transition: var(--transition-all);
+  border-radius: var(--border-radius-full);
+  padding: 2px;
+}
+
+.search-field__clear-icon:hover {
+  color: var(--color-gray-600);
+  background: var(--color-gray-100);
+  transform: scale(1.1);
+}
+
+.search-field__clear-icon:active {
+  transform: scale(0.95);
+}
+
+/* ===== BUTTON ===== */
+.search-field__button {
+  flex-shrink: 0;
+  border-radius: var(--border-radius-full);
+  min-width: auto;
+}
+
+.search-field--sm .search-field__button {
+  padding: 0 var(--spacing-3);
+  height: 32px;
+}
+
+.search-field--md .search-field__button {
+  padding: 0 var(--spacing-4);
+  height: var(--input-height);
+}
+
+.search-field--lg .search-field__button {
+  padding: 0 var(--spacing-5);
+  height: var(--input-height-lg);
+}
+
+/* ===== LAYOUT RESPONSIVO ===== */
+@media (max-width: 640px) {
+  .search-field {
+    flex-direction: column;
+    gap: var(--spacing-2);
+    align-items: stretch;
+  }
+  
+  .search-field__button {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .search-field--full-width {
+    width: 100%;
+  }
+}
+
+/* ===== VARIANTES DE LAYOUT ===== */
+
+/* Compact variant - botão integrado */
+.search-field--compact {
+  position: relative;
+}
+
+.search-field--compact .search-field__input {
+  padding-right: var(--spacing-12);
+}
+
+.search-field--compact .search-field__button {
+  position: absolute;
+  right: var(--spacing-1);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  min-width: auto;
+  width: auto;
+  padding: var(--spacing-1);
+  border-radius: var(--border-radius-md);
+}
+
+/* Rounded variant */
+.search-field--rounded .search-field__input .MuiOutlinedInput-root {
+  border-radius: var(--border-radius-full);
+}
+
+.search-field--rounded .search-field__button {
+  border-radius: var(--border-radius-full);
+}
+
+/* ===== ESTADOS DE FOCUS ===== */
+.search-field:focus-within .search-field__search-icon {
+  color: var(--color-primary);
+}
+
+/* ===== PLACEHOLDER STYLING ===== */
+.search-field__input .MuiInputBase-input::placeholder {
+  color: var(--color-gray-400);
+  font-style: italic;
+}
+
+/* ===== LOADING STATE ===== */
+.search-field--loading .search-field__search-icon {
+  animation: var(--animation-spin);
+}
+
+/* ===== INTEGRAÇÕES ===== */
+
+/* Dentro de Cards */
+.card .search-field {
+  background: transparent;
+}
+
+.card .search-field__input .MuiOutlinedInput-root {
+  background: var(--color-white);
+}
+
+/* Dentro de Header/Toolbar */
+.header .search-field,
+.toolbar .search-field {
+  max-width: 400px;
+}
+
+.header .search-field__input .MuiOutlinedInput-root,
+.toolbar .search-field__input .MuiOutlinedInput-root {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+}
+
+/* ===== TEMA ESCURO ===== */
+@media (prefers-color-scheme: dark) {
+  .search-field__input .MuiOutlinedInput-root {
+    background: var(--color-gray-700);
+    border-color: var(--color-gray-600);
+  }
+  
+  .search-field__input .MuiOutlinedInput-root:hover {
+    background: var(--color-gray-600);
+  }
+  
+  .search-field__input .MuiOutlinedInput-root.Mui-focused {
+    background: var(--color-gray-600);
+    border-color: var(--color-primary);
+  }
+  
+  .search-field__search-icon,
+  .search-field__clear-icon {
+    color: var(--color-gray-400);
+  }
+  
+  .search-field__clear-icon:hover {
+    color: var(--color-gray-200);
+    background: var(--color-gray-600);
+  }
+}
+
+/* ===== ANIMAÇÕES ===== */
+.search-field__input {
+  animation: var(--animation-fade-in);
+}
+
+.search-field__button {
+  transition: var(--transition-all);
+}
+
+.search-field__button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lg);
+}
+
+.search-field__button:active {
+  transform: translateY(0);
+}
+
+/* ===== ACCESSIBILITY ===== */
+.search-field__clear-icon:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ===== RESULTADOS DESTACADOS ===== */
+.search-field--has-results .search-field__input .MuiOutlinedInput-root {
+  border-color: var(--color-success);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.search-field--no-results .search-field__input .MuiOutlinedInput-root {
+  border-color: var(--color-warning);
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+}

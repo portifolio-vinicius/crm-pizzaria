@@ -6,6 +6,10 @@ import App from './App';
 import theme from './theme';
 import { ReduxStateProvider } from './state/redux/reduxAdapter';
 
+// Import do sistema de design tokens
+import './styles/tokens.css';
+import './styles/base.css';
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
