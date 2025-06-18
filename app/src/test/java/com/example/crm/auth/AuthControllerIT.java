@@ -1,5 +1,6 @@
 package com.example.crm.auth;
 
+import com.example.crm.usuario.Usuario;
 import com.example.crm.usuario.UsuarioRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

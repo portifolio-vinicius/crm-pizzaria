@@ -60,15 +60,4 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
-
-    @Bean
-    public UserDetailsService userDetailsService(UsuarioRepository repo) {
-        return username -> repo.findByUsername(username)
-            .map(u -> org.springframework.security.core.userdetails.User
-                .withUsername(u.getUsername())
-                .password(u.getPassword())
-                .roles(u.getRole().name())
-                .build())
-            .orElseThrow(() -> new org.springframework.security.core.userdetails.UsernameNotFoundException("User not found"));
-    }
 }
