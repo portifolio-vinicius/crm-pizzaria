@@ -115,7 +115,7 @@ const Header: React.FC = () => {
           )}
           
           <Link 
-            to={token ? '/dashboard' : '/home'}
+            to={token ? (role === 'CLIENTE' ? '/cardapio' : '/dashboard') : '/home'}
             className="header__brand"
           >
             🍕 CRM Pizzaria
@@ -124,7 +124,7 @@ const Header: React.FC = () => {
           {/* Desktop Navigation */}
           {token && menuItems.length > 0 && (
             <nav className="header__nav">
-              {menuItems.slice(0, 4).map((item) => (
+              {menuItems.map((item) => (
                 <Link
                   key={item.path}
                   to={item.path}
@@ -148,8 +148,8 @@ const Header: React.FC = () => {
                   </span>
                 )}
                 <UserMenu
-                  onLogout={handleLogout}
-                  profilePath="/profile"
+                  onLogoutClick={handleLogout}
+                  onProfileClick={() => navigate('/profile')}
                 />
               </>
             ) : (
@@ -171,7 +171,7 @@ const Header: React.FC = () => {
       {drawerOpen && (
         <>
           <div 
-            className="header__overlay header__overlay--open"
+            className="header__overlay"
             onClick={() => setDrawerOpen(false)}
           />
           <aside className="header__drawer" ref={drawerRef}>
@@ -191,7 +191,10 @@ const Header: React.FC = () => {
                   className={`header__drawer-item ${
                     location.pathname === item.path ? 'header__drawer-item--active' : ''
                   }`}
-                  onClick={() => setDrawerOpen(false)}
+                  onClick={(e) => {
+                    console.log('Link clicked:', item.path);
+                    setDrawerOpen(false);
+                  }}
                 >
                   <span className="header__drawer-icon">
                     {item.icon}

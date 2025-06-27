@@ -1,6 +1,7 @@
 package com.example.crm.cardapio;
 
 import com.example.crm.common.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,6 +26,7 @@ public class Categoria extends BaseEntity {
     private LocalDateTime updatedAt;
     
     @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY)
+    @JsonIgnore  // Evita referência circular na serialização JSON
     private List<Produto> produtos;
     
     @PrePersist
